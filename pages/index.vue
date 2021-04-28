@@ -12,7 +12,6 @@
       <HomeClipping :data="home.acf.clipping" />
       <TestimonialsList :data="home.acf.testimonials" />
       <BoxPlatform :data="home.acf.platform" margin="80px 0" />
-
       <BlogList :posts="posts" :title="translate.blog.home.title" v-if="posts.length > 0" />
       <div class="block-button" v-if="posts.length > 0">
         <div class="container">
