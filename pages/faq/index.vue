@@ -1,0 +1,62 @@
+<template>
+  <div class="faq-page">
+    <NewHero :data="page.acf.hero" />
+    <GrowthBox :data="page.acf.growth" negative-margin="-20px"/>
+    <FaqFilter @search="search" />
+    <FaqCategories :list="categories" />
+    <FaqList :list="faq" title="Sobre a a55" />
+  </div>
+</template>
+<script>
+import mixins from '~/helpers/mixins'
+export default {
+  layout: 'faq',
+  mixins: [mixins],
+  async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
+
+    let language = {}
+    if (!store.state.translate.loaded) {
+      const langResource = await app.$axios.$get(defaultURL+'/'+lang+".json")
+      language = await langResource
+
+      const homeResource = await app.$axios.$get(baseAPI + '/api/home')
+      const home = await homeResource
+
+      store.commit('options/updateOptions', home.data.options)
+      store.commit('translate/updateTranslate', language)
+      store.commit('translate/updateLoaded', true)
+    }
+    
+    const pageResource = await app.$axios.$get(baseAPI + '/wp/v2/pages/?slug=faq')
+    const page = await pageResource[0]
+
+    const faqResource = await app.$axios.$get(baseAPI + '/wp/v2/faq?per_page=100')
+    const faq = await faqResource
+
+    const categoriesResource = await app.$axios.$get(baseAPI + '/wp/v2/category_faq')
+    const categories = await categoriesResource
+
+    return { 
+      faq,
+      page,
+      categories,
+      translate: language
+    }
+  },
+  data () {
+    return {
+      page: {},
+      faq: {},
+      categories: []
+    }
+  },
+  methods: {
+    async search (search) {
+      await this.$store.dispatch('faq/searchFaq', {
+        baseAPI: this.$config.baseAPI,
+        search: search
+      })
+    }
+  }
+}
+</script>

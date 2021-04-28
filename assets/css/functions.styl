@@ -1,0 +1,124 @@
+// Functions.styl.
+// Aqui vão as funções mais básicas para agilizar o desenvolvimento de um website.
+
+
+// logo: retorna a logo no site, bastando editar a largura e a altura.
+
+
+// define uma transição.
+transitions(time = .2s, itens = all, easing = ease-out)
+	transition itens time easing;
+
+// cria uma div que sobrepõe uma outra div
+
+box(w = 100%)
+	width w
+	float left
+	clear both
+	position relative
+
+btn(w = 200px, h = 50px, lh = 50px, bgcolor = #000, textcolor = #fff)
+	width w * 1px
+	height h * 1px
+	line-height lh * 1px
+	display block
+	text-align center
+	background-color bgcolor
+	color textcolor
+
+centerPerfect(pos = absolute)
+	position pos
+	top 50%
+	left 50%
+	transform translate(-50%, -50%)
+
+
+placeholderColor(placeholdercolor, maincolor)
+	color maincolor
+	&::-webkit-input-placeholder
+		color placeholdercolor
+	&:-moz-placeholder
+		color placeholdercolor
+		opacity 1
+	&::-moz-placeholder
+		color placeholdercolor
+		opacity 1
+	&:-ms-input-placeholder
+		color placeholdercolor
+
+// apelido para placeholderColor
+place(placeholdercolor, maincolor)
+	color maincolor
+	&::-webkit-input-placeholder
+		color placeholdercolor
+	&:-moz-placeholder
+		color placeholdercolor
+		opacity 1
+	&::-moz-placeholder
+		color placeholdercolor
+		opacity 1
+	&:-ms-input-placeholder
+		color placeholdercolor
+
+showActiveHover(time = .2s)
+	visibility hidden
+	opacity 0
+	transitions(time)
+	&:hover
+		opacity 1
+		visibility visible
+		transitions(time)
+showActive(time = .2s)
+	visibility hidden
+	opacity 0
+	transitions(time)
+	&.active
+		opacity 1
+		visibility visible
+		transitions(time)
+// fillArea - preenche a área da div
+filler(pos = absolute)
+	position pos
+	top 0
+	left 0
+	width 100%
+	height 100%
+
+bgCover()
+	background-repeat no-repeat
+	background-position center center
+	background-size cover
+
+// grids
+grid(grids)
+	grid-template-columns grids
+	justify-content space-between
+	display grid
+
+// prepara a link
+link(color = #000)
+	text-decoration none
+	color color
+
+golden()
+	padding-bottom 56.25%
+
+beforeAfter()
+	&:after, &:before
+		content ''
+
+appearance(v = none)
+	appearance v
+	-moz-appearance v
+	-webkit-appearance v
+
+clamplines(lines = 2)
+	display inline-block
+	-webkit-line-clamp lines
+	-moz-line-clamp lines
+	-o-line-clamp lines
+	line-clamp lines
+	text-overflow ellipsis
+	overflow hidden
+	display -webkit-box
+	-webkit-box-orient vertical

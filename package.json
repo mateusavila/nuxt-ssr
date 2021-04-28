@@ -1,0 +1,67 @@
+{
+  "name": "a55mx",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nuxt --dotenv .env.development",
+    "dev:mx": "cross-env NODE_ENV=mx nuxt --dotenv .env.mx",
+    "dev:br": "cross-env NODE_ENV=br nuxt --dotenv .env.br",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate:dev": "cross-env NODE_ENV=production nuxt generate --dotenv .env.surge",
+    "generate:devmx": "cross-env NODE_ENV=production nuxt generate --dotenv .env.surgemx",
+    "generate:mx": "cross-env NODE_ENV=production nuxt generate --dotenv .env.mx",
+    "generate:mxstage": "cross-env NODE_ENV=production nuxt generate --dotenv .env.mxstage",
+    "generate:br": "cross-env NODE_ENV=production nuxt generate --dotenv .env.br",
+    "cypress:open": "cypress open",
+    "test": "cross-env NODE_ENV=test jest"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/gtm": "^2.4.0",
+    "@nuxtjs/vercel-builder": "^0.21.2",
+    "core-js": "^3.10.1",
+    "countup.js": "^2.0.7",
+    "nuxt": "^2.15.4",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^4.3.1",
+    "swiper": "^5.4.5",
+    "vue-animate-number": "^0.4.2",
+    "vue-awesome-swiper": "^4.1.1",
+    "vue-konami-code": "^1.0.0",
+    "vue-the-mask": "^0.11.1",
+    "vuejs-paginate": "^2.1.0",
+    "vuelidate": "^0.7.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/plugin-transform-modules-commonjs": "^7.13.8",
+    "@babel/preset-env": "^7.13.15",
+    "@vue/test-utils": "^1.1.4",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^26.6.3",
+    "cross-env": "^7.0.3",
+    "cypress": "^7.1.0",
+    "jest": "^26.6.3",
+    "jest-serializer-vue": "^2.0.2",
+    "vue-jest": "^3.0.7"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "snapshotSerializers": [
+      "jest-serializer-vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      ".*\\.(vue)$": "vue-jest"
+    },
+    "globals": {
+      "vue-jest": {
+        "babelConfig": true
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.fade-enter-active {
+  transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.fade-leave-active {
+  transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.fade-enter {
+  opacity: 1;
+  filter: grayscale(0) brightness(0);
+  transform: translate3d(0, 0, 0);
+}
+.fade-leave-to {
+  opacity: 0;
+  filter: grayscale(100%) brightness(100%);
+  transform: translate3d(0, 60px, 0);
+}
