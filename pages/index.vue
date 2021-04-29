@@ -27,10 +27,11 @@ export default {
   layout: 'page',
   mixins: [mixins],
   async asyncData ({ store, app, $config: { baseAPI, lang, defaultURL } }) {
+    const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
+    const language = await translate()
     const pageResource = await app.$axios.$get(baseAPI + '/api/home', { mode: 'cors' })
     const page = await pageResource
-    const langResource = await app.$axios.$get(defaultURL+'/'+lang+".json", { mode: 'cors' })
-    const language = await langResource
+    
     store.commit('translate/updateTranslate', language)
     store.commit('translate/updateLoaded', true)
     store.commit('options/updateOptions', page.data.options)

@@ -7,9 +7,9 @@
           <div class="home-how-works-item-icon">
              <img 
              :src="item.image.url" 
-             :alt="item.image.description" 
-             :width="item.image.width"
-             :height="item.image.height"
+             :alt="item.title" 
+             width="120"
+             height="120"
              loading="lazy">
           </div>
           <div class="home-how-works-item-info">
@@ -68,6 +68,9 @@ export default {
   margin-bottom 30px
   display flex
   justify-content center
+  img
+    width auto
+    height auto
 .home-how-works-item-info
   width 100%
   color #fff

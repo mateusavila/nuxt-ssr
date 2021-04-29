@@ -22,6 +22,8 @@ export default {
 .page-text
   color #606266
   line-height 150%
+  span, p
+    line-height 150%
   a
     color #0096FF
     text-decoration none
@@ -52,7 +54,11 @@ export default {
     display block
     margin 20px 0 40px
     &:first-child
+      object-fit cover
+      max-height 500px
+      object-position center top
       border-radius 4px
+  
 .aligncenter,.alignleft,.alignright
     display block
     padding 0

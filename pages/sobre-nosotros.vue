@@ -39,11 +39,10 @@ export default {
   mixins: [mixins],
   async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
 
-    let language = {}
+    const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
+    const language = await translate()
+    
     if (!store.state.translate.loaded) {
-      const langResource = await app.$axios.$get(defaultURL+'/'+lang+".json", { mode: 'cors' })
-      language = await langResource
-
       const homeResource = await app.$axios.$get(baseAPI + '/api/home', { mode: 'cors' })
       const home = await homeResource
 
@@ -62,7 +61,8 @@ export default {
   },
   data () {
     return {
-      page: {}
+      page: {},
+      translate: {}
     }
   }
 }

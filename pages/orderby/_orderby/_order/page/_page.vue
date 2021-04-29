@@ -1,6 +1,5 @@
 <template>
   <div class="blog-page">
-    <Loading :loading="loading" />
     <NewHero :data="page.acf.hero" />
     <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
     <BlogMainSlider :list="mainNews" />
@@ -32,16 +31,24 @@ export default {
   mixins: [mixins, blog],
   async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
     const pageResource = await app.$axios.$get(baseAPI + '/api/blog', { mode: 'cors' })
+    const page = await pageResource
 
     const postsResource = await app.$axios.$get(baseAPI + '/api/orderby?order='+params.order+'&orderby='+params.orderby+'&page='+ params.page, { mode: 'cors' })
-
-    const langResource = await app.$axios.$get(defaultURL+'/'+lang+".json", { mode: 'cors' })
-
     const posts = await postsResource
-    const page = await pageResource
-    const language = await langResource
-    store.commit('translate/updateTranslate', language)
-    store.commit('translate/updateLoaded', true)
+
+    const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
+    const language = await translate()
+
+    if (!store.state.translate.loaded) {
+
+      const homeResource = await app.$axios.$get(baseAPI + '/api/home', { mode: 'cors' })
+      const home = await homeResource
+
+      store.commit('options/updateOptions', home.data.options)
+      store.commit('translate/updateTranslate', language)
+      store.commit('translate/updateLoaded', true)
+    }
+
     return {
       posts: posts.data,
       page: page.data.home,

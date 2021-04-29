@@ -47,7 +47,7 @@ export default {
     ]
   },
   // server: {
-  //   host: '192.168.0.13',
+  //   host: '127.0.0.1',
   //   port: 3000
   // },
 
@@ -80,7 +80,9 @@ export default {
     ['@nuxtjs/gtm', {
       id: process.env.GTM
     }],
-    ['@nuxtjs/axios']
+    ['@nuxtjs/axios'],
+    ['nuxt-precompress'],
+    ['@nuxtjs/html-minifier', { log: 'once', logHtml: true }]
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

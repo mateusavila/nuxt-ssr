@@ -12,26 +12,11 @@ import mixins from '~/helpers/mixins'
 export default {
   layout: 'faq',
   mixins: [mixins],
-  // async asyncData ({ store, params, $config: { baseAPI, lang, defaultURL } }) {
-  //   await store.dispatch('page/loadPage', { baseAPI, lang, defaultURL })
-  //   await store.dispatch('faq/loadPageByCategory', { baseAPI, lang, defaultURL, category: params.category, slug: 'faq' })
-  // },
-  // computed: {
-  //   faq () { return this.$store.state.faq.faq },
-  //   page () { return this.$store.state.faq.page },
-  //   loading () { return this.$store.state.faq.loaded },
-  //   options () { return this.$store.state.options.options },
-  //   categories () { return this.$store.state.faq.categories },
-  //   mainCategory () {
-  //     return this.categories.find(el => el.slug === this.$route.params.category)
-  //   }
-  // },
   async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
 
-    let language = {}
+    const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
+    const language = await translate()
     if (!store.state.translate.loaded) {
-      const langResource = await app.$axios.$get(defaultURL+'/'+lang+".json")
-      language = await langResource
 
       const homeResource = await app.$axios.$get(baseAPI + '/api/home')
       const home = await homeResource
