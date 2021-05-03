@@ -4,16 +4,16 @@
       <TitleH3 :text="title" css-class="left" />
       <div class="faq-page-list" v-if="list.length > 0">
         <FaqItem 
-          v-for="(item, index) in list" 
-          :key="index" 
+          v-for="(item, ind) in mobileList" 
+          :key="ind" 
           :question="item.acf.title"
           :answer="item.acf.text"
         />
         <FaqItemDesktop 
-          v-for="(item, index) in list" 
-          :key="index" 
-          :question="item.acf.title"
-          :answer="item.acf.text"
+          v-for="(item2, index2) in list" 
+          :key="index2 + 'a'" 
+          :question="item2.acf.title"
+          :answer="item2.acf.text"
         />
       </div>
       <FaqEmpty v-if="list.length === 0" />
@@ -25,6 +25,11 @@ export default {
   name: 'FaqList',
   props: {
     list: {
+      type: Array,
+      required: false,
+      default: []
+    },
+    mobileList: {
       type: Array,
       required: false,
       default: []

@@ -8,7 +8,9 @@
       :alt="alternate" 
       :width="images.image.width" 
       :height="images.image.height" 
-      :loading="loading" />
+      :loading="loading"
+      decoding="async"
+       />
   </picture>
 </template>
 <script>
@@ -56,6 +58,8 @@ export default {
     object-fit cover
     height auto
     max-width 100%
+    background-size cover
+    background-color #fafafa
 @media all and (max-width: 1300px)
   .image-box
     &.hero-image

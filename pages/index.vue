@@ -1,32 +1,34 @@
 <template>
-  <client-only>
-    <div class="main-page">
-      <NewHero :data="home.acf.hero" />
-      <GrowthBox :data="home.acf.growth" negative-margin="-60px"/>
-      <Simulator />
-      <HomeNumbers :list="home.acf.finance" />
-      <HomePartners :list="home.acf.partners" />
-      <HomeHowWorks :data="home.acf.how_works" />
-      <HomeAdvantages :list="home.acf.advantages" />
-      <BoxJobs :data="home.acf.loan" css-class="text-big" />
-      <HomeClipping :data="home.acf.clipping" />
-      <TestimonialsList :data="home.acf.testimonials" />
-      <BoxPlatform :data="home.acf.platform" margin="80px 0" />
-      <BlogList :posts="posts" :title="translate.blog.home.title" v-if="posts.length > 0" />
+  <div class="main-page">
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
+    <NewHero :data="home.acf.hero" />
+    <GrowthBox :data="home.acf.growth" negative-margin="-60px"/>
+    <div class="content-visibility">
+      <LazySimulator />
+      <LazyHomeNumbers :list="home.acf.finance" />
+      <LazyHomePartners :list="home.acf.partners" />
+      <LazyHomeHowWorks :data="home.acf.how_works" />
+      <LazyHomeAdvantages :list="home.acf.advantages" />
+      <LazyBoxJobs :data="home.acf.loan" css-class="text-big" />
+      <LazyHomeClipping :data="home.acf.clipping" />
+      <LazyTestimonialsList :data="home.acf.testimonials" />
+      <LazyBoxPlatform :data="home.acf.platform" margin="80px 0" />
+      <LazyBlogList :posts="posts" :title="translate.blog.home.title" v-if="posts.length > 0" />
       <div class="block-button" v-if="posts.length > 0">
         <div class="container">
-          <LinkBox url="/blog" :text="translate.blog.home.more" color="blue" css-class="huge" />
+          <LazyLinkBox url="/blog" :text="translate.blog.home.more" color="blue" css-class="huge" />
         </div>
       </div>
     </div>
-  </client-only>
+    
+  </div>
 </template>
 <script>
 import mixins from '~/helpers/mixins'
 export default {
   layout: 'page',
   mixins: [mixins],
-  async asyncData ({ store, app, $config: { baseAPI, lang, defaultURL } }) {
+  async asyncData ({ store, app, $config: { baseAPI, lang } }) {
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
     const language = await translate()
     const pageResource = await app.$axios.$get(baseAPI + '/api/home', { mode: 'cors' })

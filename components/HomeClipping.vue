@@ -77,4 +77,10 @@ export default {
   .home-clipping
     .container
       width calc(100% - 20px)
+  .home-clipping-list
+    .home-clipping-item
+      img
+        max-height 32px
+        width auto
+        display inline-block
 </style>

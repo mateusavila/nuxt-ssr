@@ -1,6 +1,6 @@
 <template>
   <div class="about-page">
-    <Loading :loading="loading" />
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
     <NewHero :data="page.acf.hero" />
     <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
     <div class="about-page-text">
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <BoxJobs :data="page.acf.our_team" />
+    <LazyBoxJobs :data="page.acf.our_team" />
   </div>
 </template>
 <script>
@@ -37,7 +37,7 @@ import mixins from '~/helpers/mixins'
 export default {
   layout: 'page',
   mixins: [mixins],
-  async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
+  async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
 
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
     const language = await translate()

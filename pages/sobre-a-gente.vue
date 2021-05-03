@@ -1,34 +1,37 @@
 <template>
   <div class="about-page">
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
     <NewHero :data="page.acf.hero" />
     <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
-    <div class="about-page-text">
-      <div class="container">
-        <div class="about-page-text-main">
-          <div class="about-page-text-item">
-            <div class="about-page-text-item-text" v-html="page.acf.about"></div>
+    <div class="content-visibility">
+      <div class="about-page-text">
+        <div class="container">
+          <div class="about-page-text-main">
+            <div class="about-page-text-item">
+              <div class="about-page-text-item-text" v-html="page.acf.about"></div>
+            </div>
+            <div class="about-page-text-item">
+              <div class="about-page-text-item-text" v-html="page.acf.purpose"></div>
+            </div>
           </div>
-          <div class="about-page-text-item">
-            <div class="about-page-text-item-text" v-html="page.acf.purpose"></div>
-          </div>
-        </div>
-        <div class="about-page-text-side">
-          <div class="about-page-text-item">
-            <div class="about-page-text-item-text" v-html="page.acf.business"></div>
-          </div>
-          <div class="about-page-text-item">
-            <div class="about-page-text-item-text" v-html="page.acf.mission"></div>
-          </div>
-          <div class="about-page-text-item">
-            <div class="about-page-text-item-text" v-html="page.acf.vision"></div>
-          </div>
-          <div class="about-page-text-item">
-            <div class="about-page-text-item-text" v-html="page.acf.values"></div>
+          <div class="about-page-text-side">
+            <div class="about-page-text-item">
+              <div class="about-page-text-item-text" v-html="page.acf.business"></div>
+            </div>
+            <div class="about-page-text-item">
+              <div class="about-page-text-item-text" v-html="page.acf.mission"></div>
+            </div>
+            <div class="about-page-text-item">
+              <div class="about-page-text-item-text" v-html="page.acf.vision"></div>
+            </div>
+            <div class="about-page-text-item">
+              <div class="about-page-text-item-text" v-html="page.acf.values"></div>
+            </div>
           </div>
         </div>
       </div>
+      <LazyBoxJobs :data="page.acf.our_team" />
     </div>
-    <BoxJobs :data="page.acf.our_team" />
   </div>
 </template>
 <script>
@@ -36,7 +39,7 @@ import mixins from '~/helpers/mixins'
 export default {
   layout: 'page',
   mixins: [mixins],
-  async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
+  async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
 
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
     const language = await translate()

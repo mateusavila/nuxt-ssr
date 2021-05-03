@@ -16,14 +16,14 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: process.env.PAGETITLE,
+    title: 'a55',
     htmlAttrs: {
-      lang: 'es-MX'
+      lang: 'pt-BR'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.PAGEDESCRIPTION }
+      { hid: 'description', name: 'description', content: 'Nosso financiamento empresarial se adapta a seus resultados mensais recorrentes. Acelere o crescimento da sua empresa com a a55.' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -63,9 +63,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~plugins/vuelidate.js', ssr: false },
-    { src: '~plugins/v-mask.js', ssr: false },
-    { src: '~plugins/vue-awesome-swiper.js', ssr: false },
-    { src: '~plugins/vue-animate-number.js', ssr: false }
+    { src: '~plugins/vue-awesome-swiper.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -78,7 +76,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     ['@nuxtjs/gtm', {
-      id: process.env.GTM
+      id: 'GTM-5862Z86'
     }],
     ['@nuxtjs/axios'],
     ['nuxt-precompress'],
@@ -87,13 +85,14 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['countup.js']
+    
   },
   loading: '~/components/Loading.vue',
   // loading: false,
   publicRuntimeConfig: {
-    baseAPI: process.env.BASE_API,
-    lang: process.env.LANGUAGE,
-    defaultURL: process.env.DEFAULT_URL
+    // baseAPI: process.env.BASE_API,
+    // lang: process.env.SITEA55_LANGUAGE
+    baseAPI: 'https://wpbr-dev.a55.tech/wp-json',
+    lang: 'pt-br'
   }
 }

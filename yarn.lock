@@ -3386,11 +3386,6 @@ cosmiconfig@^5.0.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
-countup.js@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/countup.js/-/countup.js-2.0.7.tgz#56b72a87fc0ee3cadb38356c246ccac88fb0a8cc"
-  integrity sha512-FO0nQdvG1iQwHp28wdvkErxnNUSbdkzztqZ6YNHKLHydngD2tdiKEW8dFrqpahF3tj+Ma70h0vyYrCBzxlVWdg==
-
 crc@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/crc/-/crc-3.8.0.tgz#ad60269c2c856f8c299e2c4cc0de4556914056c6"
@@ -9168,11 +9163,6 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shifty@^2.0.2:
-  version "2.15.2"
-  resolved "https://registry.yarnpkg.com/shifty/-/shifty-2.15.2.tgz#be74f83b5494708ca5531c3725027a0b51d1dc3d"
-  integrity sha512-uaDIdYXrOGncvPula4Pi2jl7kv46IwvZ10AYBSGsl/vrvclOXqzMWOAQCgDjNR7LVPgQki0CTtOMJOH9gnJgsg==
-
 side-channel@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
@@ -10325,13 +10315,6 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-animate-number@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/vue-animate-number/-/vue-animate-number-0.4.2.tgz#fa8901de4c758fa844a0442ff72dbe329decc471"
-  integrity sha1-+okB3kx1j6hEoEQv9y2+Mp3sxHE=
-  dependencies:
-    shifty "^2.0.2"
-
 vue-awesome-swiper@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/vue-awesome-swiper/-/vue-awesome-swiper-4.1.1.tgz#8f7ab221ad003021d756b86aa618f429924900fe"
@@ -10433,11 +10416,6 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
-
-vue-the-mask@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/vue-the-mask/-/vue-the-mask-0.11.1.tgz#91ee01008354ae57bccc79bb61b65f32d971d9d5"
-  integrity sha512-UquSfnSWejD0zAfcD+3jJ1chUAkOAyoxya9Lxh9acCRtrlmGcAIvd0cQYraWqKenbuZJUdum+S174atv2AuEHQ==
 
 vue@^2.2.2, vue@^2.6.12:
   version "2.6.12"

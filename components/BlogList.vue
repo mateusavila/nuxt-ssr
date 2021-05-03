@@ -3,6 +3,7 @@
     <div class="container">
       <TitleH3 :text="title" />
       <div class="blog-slider">
+        <ArrowPrev @go-prev="prev" :size="posts.length" css-class="theme-2" />
         <swiper
         ref="blogSlider" 
         :options="swiperBlog" >
@@ -10,6 +11,7 @@
             <BlogItem :data="item"  />
           </swiper-slide>
         </swiper>
+        <ArrowNext @go-next="next" :size="posts.length" css-class="theme-2" />
       </div>
     </div>
   </div>
@@ -34,29 +36,34 @@ export default {
   },
   data: () => ({
     swiperBlog: {
-      spaceBetween: 12,
+      spaceBetween: 10,
       centeredSlides: false,
       slidesPerView: 3,
-      pagination: {
-        el: '.blog-pagination',
-        clickable: true
-      },
       breakpoints: {
         0: {
           slidesPerView: 'auto',
-          centeredSlides: true
+          centeredSlides: false
         },
-        600: {
+        750: {
           slidesPerView: 2,
           centeredSlides: false
         },
-        1000: {
+        1100: {
           slidesPerView: 3,
           centeredSlides: false
         }
       }
     }
-  })
+  }),
+  computed: {
+    swiper() {
+      return this.$refs.blogSlider.$swiper
+    }
+  },
+  methods: {
+    next () { this.swiper.slideNext() },
+    prev () { this.swiper.slidePrev() }
+  }
 }
 </script>
 <style lang="stylus">
@@ -64,11 +71,6 @@ export default {
 .blog-area
   box()
   margin 60px 0
-  .blog-slider
-    width calc(100% + 32px)
-    margin-left -8px
-    .swiper-slide
-      padding 0 4px
   .container
     max-width 1140px
     width calc(100% - 64px)
@@ -79,6 +81,16 @@ export default {
     display grid
   .mobile
     display none
+.blog-slider
+  width 100%
+  padding 20px 0
+  display flex
+  justify-content space-between
+  align-items center
+  .swiper-slide
+    padding 0 4px
+  .swiper-container
+    width calc(100% - 100px)
 @media all and (max-width: 1250px)
   .blog-area
     .blog-slider
@@ -87,9 +99,28 @@ export default {
     .container
       max-width 1200px
       width calc(100% - 32px)
+@media all and (max-width: 750px)
+  .blog-area
+    .arrow-prev, .arrow-next
+      display none
+  
+  .blog-slider 
+    width 100%
+    .swiper-container
+      width 100%
+    .swiper-slide
+      width calc(100% - 150px)
 @media all and (max-width: 600px)
   .blog-area
     .container
       max-width 1200px
+      width calc(100% - 20px)
+  .blog-slider
+    width 100%
+    .swiper-slide
+      width calc(100% - 80px)
+@media all and (max-width: 450px)
+    .blog-slider
+    .swiper-slide
       width calc(100% - 20px)
 </style>

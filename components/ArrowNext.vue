@@ -52,6 +52,10 @@
   background-color #fff
   background-image url('~assets/img/dashicons_arrow-next.svg')
   transitions(.2s)
+  &.theme-2
+    background-color transparent
+    background-size auto 20px
+    background-image url('~assets/img/arrow-next.svg')
   &:hover
     transform translateY(-50%) scale(1.05)
     transitions(.2s)

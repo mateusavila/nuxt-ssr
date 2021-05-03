@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'/blog/'+data.slug" class="blog-item" :class="{'has-min-height': hasMinHeight}">
+  <nuxt-link :to="'/blog/'+data.slug" class="blog-item" :class="{'has-min-height': hasMinHeight}" @click.native="newPage('/blog/'+data.slug)">
     <div class="blog-image">
       <div class="blog-category" v-if="data.category_name.length > 0">
         <p>{{data.category_name[0]}}</p>
@@ -46,6 +46,12 @@ export default {
   computed: {
     translate () { return this.$store.state.translate.translate },
     fullname () { return `${this.data.author_data.author.first_name} ${this.data.author_data.author.last_name}` }
+  },
+  methods: {
+    newPage (slug) { 
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false) 
+    }
   }
 }
 </script>
@@ -61,7 +67,7 @@ export default {
   position relative
   transitions(.2s)
   border-radius 16px
-  box-shadow: 0px 16px 24px rgba(5, 152, 255, 0.1), 0px 2px 6px rgba(5, 152, 255, 0.08), 0px 0px 1px rgba(5, 152, 255, 0.08)
+  box-shadow: 0px 2px 20px rgba(0, 21, 75, 0.08)
   text-decoration none
   &.has-min-height
     min-height 570px

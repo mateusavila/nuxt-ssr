@@ -1,50 +1,57 @@
 <template>
   <div class="social-network">
-    <a :href="twitter" target="_blank" rel="noopener noreferrer" class="social-network-item tw">
+    <a :href="twitter.url" target="_blank" rel="noopener noreferrer" class="social-network-item tw">
       <span class="icon tw"></span>
       <span class="icon-hover tw"></span>
     </a>
-    <a :href="linkedin" target="_blank" rel="noopener noreferrer" class="social-network-item in">
+    <a :href="linkedin.url" target="_blank" rel="noopener noreferrer" class="social-network-item in">
       <span class="icon in"></span>
       <span class="icon-hover in"></span>
     </a>
-    <a :href="blogger" target="_blank" rel="noopener noreferrer" class="social-network-item bg">
+    <nuxt-link :to="blogger.url" class="social-network-item bg" @click.native="newPage">
       <span class="icon bg"></span>
       <span class="icon-hover bg"></span>
-    </a>
-    <a :href="facebook" target="_blank" rel="noopener noreferrer" class="social-network-item fb">
+    </nuxt-link>
+    <a :href="facebook.url" target="_blank" rel="noopener noreferrer" class="social-network-item fb">
       <span class="icon fb"></span>
       <span class="icon-hover fb"></span>
     </a>
-    <a :href="instagram" target="_blank" rel="noopener noreferrer" class="social-network-item ig">
+    <a :href="instagram.url" target="_blank" rel="noopener noreferrer" class="social-network-item ig">
       <span class="icon ig"></span>
       <span class="icon-hover ig"></span>
     </a>
   </div>
 </template>
 <script>
+// aqui está em modo gambiarra
 export default {
   name: 'SocialNetworks',
   props: {
     twitter: {
-      type: String,
+      type: Object,
       required: true
     },
     linkedin: {
-      type: String,
+      type: Object,
       required: true
     },
     blogger: {
-      type: String,
+      type: Object,
       required: true
     },
     instagram: {
-      type: String,
+      type: Object,
       required: true
     },
     facebook: {
-      type: String,
+      type: Object,
       required: true
+    }
+  },
+  methods: {
+    newPage () { 
+      if (window.location.pathname === '/blog') return false
+      this.$store.commit('page/updateLoaded', false) 
     }
   }
 }
@@ -106,7 +113,6 @@ export default {
     .icon-hover.fb
       background-image url('~assets/img/facebook-active.svg')
       background-size auto 18px
-    
     &:hover
       background-color #0096ff
       transitions(.1s)
@@ -116,4 +122,7 @@ export default {
       .icon
         opacity 0
         transitions(.1s)
+@media all and (max-width: 1000px)
+  .social-network
+    margin 0 auto 20px
 </style>

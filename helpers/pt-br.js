@@ -101,11 +101,26 @@ export default {
   close: "fechar",
   footer: {
     social: {
-      twitter: "https://twitter.com/a55tech",
-      linkedin: "https://www.linkedin.com/company/a55/?originalSubdomain=br",
-      blogger: "https://legacy.a55.tech/es/blog-a55/",
-      facebook: "https://www.facebook.com/a55.tech/",
-      instagram: "https://www.instagram.com/a55.tech/"
+      twitter: {
+        url: "https://twitter.com/a55tech",
+        external: true
+      },
+      linkedin: {
+        url: "https://www.linkedin.com/company/a55/?originalSubdomain=br",
+        external: true
+      },
+      blogger: {
+        url: "/blog",
+        external: false
+      },
+      facebook: {
+        url: "https://www.facebook.com/a55.tech",
+        external: true
+      },
+      instagram: {
+        url: "https://www.instagram.com/a55.tech/",
+        external: true
+      }
     },
     legal: [
       { name: "Termos de autorização para consulta ao SCR", slug: "https://wpbr-dev.a55.tech/wp-content/uploads/2021/04/SCR-Termo-de-Autorizacao-de-Consulta-Socinal-corban-copia.pdf", "has_image": false, "width": false, "height": false },
@@ -163,28 +178,6 @@ export default {
         content: "<p><a href=\"mailto:meajuda@a55.tech\">meajuda@a55.tech</a></p><p>Atendimento: Segunda a sexta, <br>das 9h as 18h</p>"
       }
     ],
-    columns: ["a55", "Produtos", "Portal", "América Latina", "Fale conosco"],
-    privacy: {
-      text: "Aviso de Privacidade",
-      url: "https://a55-mx-cdn.s3.amazonaws.com/Aviso+Privacidad.pdf"
-    },
-    terms: {
-      text: "Termos e Condições",
-      url: "https://a55-mx-cdn.s3.amazonaws.com/T%C3%A9rminos+y+Condiciones.pdf"
-    },
-    a55_menu: [
-      { name: "Blog", slug: "https://legacy.a55.tech/pt/blog/", external: true }
-    ],
-    menu: [
-      { name: "Créditos Empresariais", slug: "/creditos-empresariais" }
-    ],
-    platform_menu: [
-      { name: "Plataforma", slug: "http://plataforma.a55.tech/entrar" }
-    ],
-    country_menu: [
-      { name: "Brasil", slug: "https://a55.tech" },
-      { name: "México", slug: "https://a55.mx" }
-    ],
     email: "meajuda@a55.tech"
   },
   header: {
@@ -216,10 +209,15 @@ export default {
     },
     close: "fechar",
     form: {
-      name: {
-        label: "Nome completo",
+      first_name: {
+        label: "Nome",
         error: "Precisamos de um nome válido",
-        placeholder: "Nome completo"
+        placeholder: "Nome"
+      },
+      last_name: {
+        label: "Sobrenome",
+        error: "Precisamos de um sobrenome válido",
+        placeholder: "Sobrenome"
       },
       email: {
         label: "E-mail",

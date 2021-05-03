@@ -1,11 +1,11 @@
 <template>
   <div class="blog-post-breadcrumbs">
     <p>
-      <nuxt-link to="/">Home</nuxt-link>
+      <nuxt-link to="/" @click.native="newPage('/')">Home</nuxt-link>
       <img src="~assets/img/breadcrumb-next.svg" alt="next" width="16" height="16" loading="lazy">
-      <nuxt-link to="/blog">Blog</nuxt-link>
+      <nuxt-link to="/blog" @click.native="newPage('/blog')">Blog</nuxt-link>
       <img v-if="data.category[0]" src="~assets/img/breadcrumb-next.svg" alt="next" width="16" height="16" loading="lazy">
-      <nuxt-link v-if="data.category[0]" :to="'/category/'+data.category[0].slug">{{data.category[0].name}}</nuxt-link>
+      <nuxt-link v-if="data.category[0]" :to="'/category/'+data.category[0].slug" @click.native="newPage('/category/'+data.category[0].slug)">{{data.category[0].name}}</nuxt-link>
       <img src="~assets/img/breadcrumb-next.svg" alt="next" width="16" height="16" loading="lazy">
       <strong v-html="data.title"></strong>
     </p>
@@ -19,6 +19,12 @@ export default {
       type: Object,
       required: false,
       default: {}
+    }
+  },
+  methods: {
+    newPage (slug) { 
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false) 
     }
   }
 }

@@ -6,7 +6,7 @@
     <input type="checkbox" name="name" id="news-select-checkbox">
     <div class="news-select-list-area">
       <div class="news-select-list">
-        <nuxt-link :to="'/orderby/'+order.slug+'/'+order.order" v-for="(order, index) in orders" :key="index"><span>{{order.name}}</span></nuxt-link>
+        <nuxt-link @click.native="newPage('/orderby/'+order.slug+'/'+order.order)" :to="'/orderby/'+order.slug+'/'+order.order" v-for="(order, index) in orders" :key="index"><span>{{order.name}}</span></nuxt-link>
       </div>
     </div>
   </div>
@@ -24,6 +24,12 @@ export default {
       type: Array,
       required: false,
       default: []
+    }
+  },
+  methods: {
+    newPage (slug) { 
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false) 
     }
   }
 }

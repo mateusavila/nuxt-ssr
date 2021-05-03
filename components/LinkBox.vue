@@ -1,7 +1,7 @@
 <template>
   <div class="link-area">
     <a :href="url" data-link="external" v-if="isExternal(url)" :class="[color, cssClass]" target="_blank" rel="noopener noreferrer">{{ text }}</a>
-    <nuxt-link :to="url" v-if="isExternal(url) === false" :class="[color, cssClass]">{{ text }}</nuxt-link>
+    <nuxt-link @click.native="newPage(url)" :to="url" v-if="isExternal(url) === false" :class="[color, cssClass]">{{ text }}</nuxt-link>
   </div>
 </template>
 <script>
@@ -36,6 +36,10 @@ export default{
     },
     isExternal (url) {
       return ( ( url.indexOf(':') > -1 || url.indexOf('//') > -1 ) && this.checkDomain(location.href) !== this.checkDomain(url) )
+    },
+    newPage (slug) { 
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false) 
     }
   }
 }

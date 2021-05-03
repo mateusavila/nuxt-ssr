@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-  name: 'Loading',
+  name: 'LoadingBlock',
   props: {
     loading: {
       type: Boolean,
@@ -20,15 +20,15 @@ export default {
 @import '~assets/css/functions.styl'
 .loading-block
   background #fff
-  filler()
+  filler(fixed)
   z-index 100000
-  visibility hidden
-  opacity 0
+  visibility visible
+  opacity 1
   will-change opacity, visibility
   transitions(.2s)
   &.active
-    visibility visible
-    opacity 1
+    visibility hidden
+    opacity 0
     transitions(.2s)
   svg
     centerPerfect()

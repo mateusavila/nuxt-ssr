@@ -101,6 +101,7 @@
 <script>
 import Vue from 'vue'
 import KonamiCode from 'vue-konami-code'
+
 export default {
   name: 'Simulator',
   data () {
@@ -192,8 +193,10 @@ export default {
       return this.form.revenue >= 1000 ? 'Mi' : 'k'
     }
   },
-  mounted () {
+  created () {
     this.loadTranslation()
+  },
+  mounted () {
     Vue.use(KonamiCode, {callback: () => {
       this.$nextTick(() => this.konami = true )
     }})
@@ -208,15 +211,14 @@ export default {
       baloon.classList.remove('active') 
     },
     async loadTranslation () {
-      await fetch(this.$config.defaultURL+'/simulator-'+this.$config.lang+'.json', { mode: 'cors' }).then(response => response.json()).then(response => {
-          this.translate = response
-          this.form.money = response.numbers.money.min
-          this.form.parcel = response.numbers.parcel.min
-          this.form.revenue = response.numbers.revenue.min
-          this.updatePosition(0, 'money', response.numbers.money.min, response.numbers.money.max)
-          this.updatePosition(1, 'parcel', response.numbers.parcel.min, response.numbers.parcel.max)
-          this.updatePosition(2, 'revenue', response.numbers.revenue.min, response.numbers.revenue.max)
-      })
+      const translate = () => import(`~/helpers/simulator-${this.$config.lang}.js`).then(m => m.default || m)
+      this.translate = await translate()
+      this.form.money = this.translate.numbers.money.min
+      this.form.parcel = this.translate.numbers.parcel.min
+      this.form.revenue = this.translate.numbers.revenue.min
+      this.updatePosition(0, 'money', this.translate.numbers.money.min, this.translate.numbers.money.max)
+      this.updatePosition(1, 'parcel', this.translate.numbers.parcel.min, this.translate.numbers.parcel.max)
+      this.updatePosition(2, 'revenue', this.translate.numbers.revenue.min, this.translate.numbers.revenue.max)
     },
     updatePosition (index, key, min, max) {
       const input = document.querySelector('.simulator-input-'+index)

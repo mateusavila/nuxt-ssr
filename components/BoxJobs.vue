@@ -82,6 +82,14 @@ export default {
   .box-jobs-text
     h3
       font-size: clamp(24px, calc(1.5rem + (48 - 24) * ((100vw - 400px) / (1200 - 400))), 48px)
+@media all and (max-width: 800px)
+  .box-jobs
+    .box-jobs-image
+      &:before
+        width 100%
+        background: rgba(0, 21, 75, 0.77)
+  .box-jobs-center
+    max-width 100%
 @media all and (max-width: 600px)
   .box-jobs
     height 400px

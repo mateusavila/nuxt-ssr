@@ -14,7 +14,7 @@
         <TitleH4 :text="translate.newsletter.success.title" css-class="white" />
         <p>{{translate.newsletter.success.text}}</p>
         <div class="newsletter-result-action">
-          <ButtonBox :text="translate.newsletter.close" @action="result.status = false; loading = false" type="submit" color="orange" />
+          <ButtonBox :text="translate.newsletter.close" @action="closeResult" type="button" color="orange" />
         </div>
       </div>
       <div class="newsletter-form">
@@ -23,14 +23,28 @@
             <div class="field">
               <input 
                 type="text"
-                id="newsletter-firstname"
-                :class="errorClass($v.form.firstname)"
-                v-model.trim="$v.form.firstname.$model"
-                :placeholder="translate.newsletter.form.name.placeholder" 
+                id="newsletter-first_name"
+                :class="errorClass($v.form.first_name)"
+                v-model.trim="$v.form.first_name.$model"
+                :placeholder="translate.newsletter.form.first_name.placeholder" 
              />
              <ErrorBox 
-                :status="$v.form.firstname.$error" 
-                :text="translate.newsletter.form.name.error" 
+                :status="$v.form.first_name.$error" 
+                :text="translate.newsletter.form.first_name.error" 
+                :margin-bottom="16"
+             />
+            </div>
+            <div class="field">
+              <input 
+                type="text"
+                id="newsletter-last_name"
+                :class="errorClass($v.form.last_name)"
+                v-model.trim="$v.form.last_name.$model"
+                :placeholder="translate.newsletter.form.last_name.placeholder" 
+             />
+             <ErrorBox 
+                :status="$v.form.last_name.$error" 
+                :text="translate.newsletter.form.last_name.error" 
                 :margin-bottom="16"
              />
             </div>
@@ -65,8 +79,8 @@ export default {
     timer: null,
     form: {
       email: '',
-      firstname: ''
-      // interest: 'all'
+      first_name: '',
+      last_name: ''
     },
     result: {
       status: false
@@ -93,15 +107,21 @@ export default {
       }
       if ( !this.$v.$invalid ) {
         this.loading = true
-        this.form.list = [325]
-        await fetch(`https://mql-api.a55.tech/subscribe-lead`, {
+        const payload = {
+          first_name: this.form.first_name,
+          // last_name: this.form.last_name,
+          email: this.form.email,
+          locale: "pt-br",
+          // list: ["all"]
+          list: [698]
+        }
+        await fetch(`https://hubspot-manager-api-staging.a55.tech/v1/subscribe`, {
           method: 'POST',
           mode: 'cors',
-          body: JSON.stringify(this.form)
+          body: JSON.stringify(payload)
         })
         .then(response => response.json())
         .then(response => {
-          console.log(response)
           this.showResult(response)
           this.loading = false
         })
@@ -114,22 +134,27 @@ export default {
       this.result.text = resource.text
       this.result.type = resource.type
       this.form.email = ''
-      this.form.firstname = ''
+      this.form.first_name = ''
+      this.form.last_name = ''
       this.$v.$reset()
+    },
+    closeResult () {
+      this.loading = false
+      this.result.status = false
     }
   },
   validations: {
     form: {
-      firstname: {
+      first_name: {
+        required
+      },
+      last_name: {
         required
       },
       email: {
         required,
         email
-      },
-      // interest: {
-      //   required
-      // }
+      }
     }
   }
 }
@@ -144,41 +169,6 @@ export default {
     max-width 800px
     margin 0 auto
     position relative
-.newsletter-interest-text
-  margin-top 10px
-  text-align center
-  width 100%
-  display block
-  color #00154B
-  font-size 14px
-.newsletter-interest-block
-  border-radius 8px
-  background #fff
-  display flex
-  justify-content center
-  flex-wrap wrap
-  align-items center
-  height 112px
-  position relative
-  input
-    position absolute
-    left 0
-    opacity 0
-    top 0
-.fields-interests
-  margin-bottom 30px
-  display flex
-  justify-content space-between
-  align-items center
-  flex-wrap wrap
-  svg
-    transitions(.2s)
-  label
-    cursor pointer
-    width calc(100% / 4 - 16px)
-    &.active svg path
-      fill #0096FF
-      transitions(.2s)
 .newsletter-form
   margin 0 auto
   width 100%
@@ -195,7 +185,7 @@ export default {
 .field-submit
   width 272px
 .field
-  width calc((100% - 300px) / 2)
+  width calc((100% - 300px) / 3)
   clear both
   margin-bottom 25px
   button
@@ -314,7 +304,13 @@ export default {
       color #0096FF
   &:hover
     transitions(.2s)
-@media all and (max-width: 900px)
+@media all and (max-width: 1200px)
+  .field-submit
+    margin 0
+    width 200px
+  .field
+    width calc((100% - 240px) / 3)
+@media all and (max-width: 1000px)
   .field
     width 100%
     margin-bottom 5px

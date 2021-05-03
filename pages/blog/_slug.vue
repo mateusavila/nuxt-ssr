@@ -1,22 +1,25 @@
 <template>
   <div class="blog-page">
-    <div class="blog-page-single">
-      <div class="container">
-        <Breadcrumbs :data="single.data" />
-        <PageContent :data="single.data" />
-        <AuthorBox 
-        v-if="authorBlock === 1"
-        :author="single.data.author" 
-        :date="single.data.date"
-        :updated-date="single.data.updated_date"
-        />
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
+    <div class="content-visibility">
+      <div class="blog-page-single">
+        <div class="container">
+          <Breadcrumbs :data="single.data" />
+          <LazyPageContent :data="single.data" />
+          <LazyAuthorBox 
+          v-if="authorBlock === 1"
+          :author="single.data.author" 
+          :date="single.data.date"
+          :updated-date="single.data.updated_date"
+          />
+        </div>
       </div>
-    </div>
-    <Topics :data="page.acf.request" />
-    <div class="block-button block-button-double">
-      <div class="container">
-        <LinkBox :url="page.acf.request.link_request" :text="page.acf.request.button_request" color="blue" />
-        <LinkBox :url="page.acf.request.link_request" text="Conheça a plataforma" color="white" />
+      <LazyTopics :data="page.acf.request" />
+      <div class="block-button block-button-double">
+        <div class="container">
+          <LazyLinkBox :url="page.acf.request.link_request" :text="page.acf.request.button_request" color="blue" />
+          <LazyLinkBox :url="page.acf.request.link_request" text="Conheça a plataforma" color="white" />
+        </div>
       </div>
     </div>
   </div>
@@ -27,7 +30,7 @@ import blog from '~/helpers/blog'
 export default {
   layout: 'page',
   mixins: [mixins, blog],
-  async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
+  async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
     const language = await translate()
 

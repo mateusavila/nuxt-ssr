@@ -1,9 +1,12 @@
 <template>
   <div class="about-page">
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
     <NewHero :data="page.acf.hero" />
     <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
-    <HowWorksNew :data="page.acf.works" />
-    <Topics :data="page.acf.request" />
+    <div class="content-visibility">
+      <HowWorksNew :data="page.acf.works" />
+      <Topics :data="page.acf.request" />
+    </div>
   </div>
 </template>
 <script>
@@ -11,7 +14,7 @@ import mixins from '~/helpers/mixins'
 export default {
   layout: 'page',
   mixins: [mixins],
-  async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
+  async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
 
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
     const language = await translate()

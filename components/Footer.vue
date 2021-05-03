@@ -17,7 +17,7 @@
           :facebook="translate.footer.social.facebook"
         />
         <p v-html="options.address" class="desktop footer-address-text"></p>
-        <div class="footer-extra-links desktop">
+        <div class="footer-extra-links">
           <a 
             :href="item.slug" 
             target="_blank" 
@@ -32,8 +32,6 @@
                 :width="item.width"
                 :height="item.height">
             </a>
-          <!-- 
-          <a :href="translate.footer.terms.url" target="_blank" rel="noopener noreferrer">{{translate.footer.terms.text}}</a> -->
         </div>
       </div>
       <div class="footer-sitemap">
@@ -41,21 +39,17 @@
           <div class="footer-sitemaps-cats" v-for="(menu, index) in translate.footer.menus" :key="index">
             <h6>
               <a :href="menu.url" v-if="menu.external && menu.is_link">{{menu.header}}</a>
-              <nuxt-link :to="menu.url" v-if="!menu.external && menu.is_link">{{menu.header}}</nuxt-link>
+              <nuxt-link @click.native="newPage(menu.url)" :to="menu.url" v-if="!menu.external && menu.is_link">{{menu.header}}</nuxt-link>
               <span v-if="!menu.is_link">{{menu.header}}</span>
             </h6>
             <ul v-if="menu.links.length > 0">
               <li v-for="(link, index) in menu.links" :key="index">
                 <a v-if="link.external" :href="link.slug" target="_blank" rel="noopener noreferrer">{{link.name}}</a>
-                <nuxt-link v-if="!link.external" :to="link.slug">{{link.name}}</nuxt-link>
+                <nuxt-link @click.native="newPage(link.slug)" v-if="!link.external" :to="link.slug">{{link.name}}</nuxt-link>
               </li>
             </ul>
             <p v-html="menu.content" v-if="menu.content.length > 0"></p>
           </div>
-        </div>
-        <div class="footer-extra-links mobile">
-          <a :href="translate.footer.privacy.url" target="_blank" rel="noopener noreferrer">{{translate.footer.privacy.text}}</a>
-          <a :href="translate.footer.terms.url" target="_blank" rel="noopener noreferrer">{{translate.footer.terms.text}}</a>
         </div>
         <div class="footer-mobile-box">
           <img
@@ -88,7 +82,11 @@ export default {
     translate () { return this.$store.state.translate.translate }
   },
   methods: {
-    buildImage (image) { return require(`~/assets/img/${image}`) }
+    buildImage (image) { return require(`~/assets/img/${image}`) },
+    newPage (slug) { 
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false) 
+    }
   }
 }
 </script>
@@ -127,8 +125,6 @@ export default {
   width calc(100% - 310px)
 .footer-extra-links
   margin-top 30px
-  &.mobile
-    display none
   a
     font-weight 300
     text-decoration none
@@ -199,55 +195,54 @@ export default {
   .footer-sitemap
     width calc(100% - 250px)
 @media all and (max-width: 1000px)
+  .footer-image.desktop
+    display none
   .footer-address
     width 100%
     p
       margin-top 30px
-    img
-      display none
   .footer-sitemap
     width 100%
     margin-top 30px
   .footer-address-text
     &.mobile
-      display block
-    &.desktop
-      display none
-  .footer-image
-    &.mobile
+      margin-top 0
       display block
     &.desktop
       display none
   .footer-extra-links
-    margin 20px 0
-    &.desktop
-      display none
-    &.mobile
-      display block
+    width 300px
+    margin 20px auto 0
+    text-align center
     a
-      margin-right 30px
-      margin-bottom 0
+      display inline-block
+      margin 0 0 20px 0
+      &:last-child
+        margin-bottom 0
   .footer-sitemap-categories
     margin-bottom 50px
+    text-align center
+    flex-wrap wrap
   .footer-mobile-box
     margin-top 50px
-    padding-top 50px
+    padding-top 20px
     border-top 1px solid #fff
   .footer-sitemap-credits-text
     border none
+    padding-top 20px
 @media all and (max-width: 850px)
   .footer-sitemap-categories
     flex-wrap wrap
   .footer-sitemaps-cats
-    width 50%
-    margin-bottom 30px
+    width 100%
+    margin-bottom 20px
 @media all and (max-width: 450px)
   .footer-sitemaps-cats
     width 100%
   .footer-extra-links
     display block
     a
-      margin 0 0 20px 20px
+      margin 0 0 20px 0
       width auto
       &:first-child
         margin-left 0

@@ -1,10 +1,13 @@
 <template>
   <div class="faq-page">
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
     <NewHero :data="page.acf.hero" />
-    <GrowthBox :data="page.acf.growth" negative-margin="-20px"/>
-    <FaqFilter @search="search" />
-    <FaqCategories :list="categories" />
-    <FaqList :list="faq.data" :title="mainCategory.name"  />
+    <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
+    <div class="content-visibility">
+      <LazyFaqFilter @search="search" />
+      <LazyFaqCategories :list="categories" />
+      <LazyFaqList :list="faq.data" :mobile-list="faq.data" :title="mainCategory.name"  />
+    </div>
   </div>
 </template>
 <script>
@@ -12,7 +15,7 @@ import mixins from '~/helpers/mixins'
 export default {
   layout: 'faq',
   mixins: [mixins],
-  async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
+  async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
 
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
     const language = await translate()

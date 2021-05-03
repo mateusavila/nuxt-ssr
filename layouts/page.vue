@@ -73,6 +73,8 @@ html
     justify-content center
     .link-area:nth-child(2)
       margin-left 20px
+.content-visibility
+  content-visibility: auto
 .pagination
   list-style-type none
   display flex

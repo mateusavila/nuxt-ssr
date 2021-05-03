@@ -1,6 +1,6 @@
 <template>
   <div class="news-categories">
-    <nuxt-link to="/blog" exact class="news-categories-item">
+    <nuxt-link to="/blog" exact class="news-categories-item" @click.native="newPage('/blog')">
       <div class="news-categories-image">
         <img src="~assets/img/category-all.svg" alt="All" width="32" height="32" loading="lazy" class="news-categories-image-img">
         <img src="~assets/img/category-all-hover.svg" alt="All hover" width="32" height="32" loading="lazy" class="news-categories-image-img-hover">
@@ -9,7 +9,7 @@
         <p>{{translate.blog.filter.category_all}}</p>
       </div>
     </nuxt-link>
-    <nuxt-link :to="'/category/'+item.category.slug" v-for="(item, index) in list" :key="index" class="news-categories-item">
+    <nuxt-link :to="'/category/'+item.category.slug" v-for="(item, index) in list" :key="index" class="news-categories-item" @click.native="newPage('/category/'+item.category.slug)">
       <div class="news-categories-image">
         <img :src="item.images.image.url" :alt="item.category.name" width="32" height="32" loading="lazy" class="news-categories-image-img">
         <img :src="item.images.image_hover.url" :alt="item.category.name +'hover'" width="32" height="32" loading="lazy" class="news-categories-image-img-hover">
@@ -32,6 +32,12 @@ export default {
   },
   computed: {
     translate () { return this.$store.state.translate.translate }
+  },
+  methods: {
+    newPage (slug) {
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false)
+    }
   }
 }
 </script>

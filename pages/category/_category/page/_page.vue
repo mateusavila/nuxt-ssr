@@ -1,27 +1,29 @@
 <template>
   <div class="blog-page">
-    <Loading :loading="loading" />
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
     <NewHero :data="page.acf.hero" />
     <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
-    <BlogMainSlider :list="mainNews" />
-    <BlogFilter 
-      :categories="categories"
-      @search="search"
-    />
-    <BlogPageList :list="posts" />
-    <Paginate
-        v-if="postsPage > 1"
-        v-model="paged"
-        :page-count="postsPage"
-        :page-range="3"
-        :prev-text="'&laquo;'"
-        :next-text="'&raquo;'"
-        :container-class="'pagination'"
-        :page-class="'pagination-item'"
-        :next-class="'pagination-item'"
-        :prev-class="'pagination-item'"
-        :click-handler="paginateCategory"
+    <div class="content-visibility">
+      <LazyBlogMainSlider :list="mainNews" />
+      <LazyBlogFilter 
+        :categories="categories"
+        @search="search"
       />
+      <LazyBlogPageList :list="posts" />
+      <Paginate
+          v-if="postsPage > 1"
+          v-model="paged"
+          :page-count="postsPage"
+          :page-range="3"
+          :prev-text="'&laquo;'"
+          :next-text="'&raquo;'"
+          :container-class="'pagination'"
+          :page-class="'pagination-item'"
+          :next-class="'pagination-item'"
+          :prev-class="'pagination-item'"
+          :click-handler="paginateCategory"
+        />
+    </div>
   </div>
 </template>
 <script>
@@ -30,7 +32,7 @@ import blog from '~/helpers/blog'
 export default {
   layout: 'page',
   mixins: [mixins, blog],
-  async asyncData ({ store, params, app, $config: { baseAPI, lang, defaultURL } }) {
+  async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
     const pageResource = await app.$axios.$get(baseAPI + '/api/blog', { mode: 'cors' })
     const page = await pageResource
     

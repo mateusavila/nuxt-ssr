@@ -2,11 +2,11 @@
   <nav class="main-navigation" :class="{'active': statusMenu}" data-test="1">
     <ul>
       <li v-for="(link, index) in translate.header.menu" :key="index" v-if="menu === 'default'">
-        <nuxt-link :to="link.slug" @click.native="closeMenu" exact>{{link.name}}</nuxt-link v-if="!link.external">
+        <nuxt-link :to="link.slug" @click.native="newPage(link.slug)" exact>{{link.name}}</nuxt-link v-if="!link.external">
         <a :href="link.slug" target="_blank" rel="noopener noreferrer" v-if="link.external">{{link.name}}</a>
       </li>
       <li v-for="(link, index) in translate.partners.menu" :key="index" v-if="menu === 'partners'">
-        <nuxt-link :to="link.slug" @click.native="closeMenu" exact v-if="!link.external">{{link.name}}</nuxt-link>
+        <nuxt-link :to="link.slug" @click.native="newPage(link.slug)" exact v-if="!link.external">{{link.name}}</nuxt-link>
         <a :href="link.slug" target="_blank" rel="noopener noreferrer" v-if="link.external">{{link.name}}</a>
       </li>
     </ul>
@@ -39,7 +39,11 @@ export default {
     translate () { return this.$store.state.translate.translate }
   },
   methods: {
-    closeMenu () { this.$emit('close') }
+    newPage (slug) { 
+      this.$emit('close') 
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false)
+    }
   }
 }
 </script>

@@ -21,8 +21,8 @@ export default {
 <style lang="stylus">
 @import '~assets/css/functions.styl'
 .new-hero
-  height 100vh
-  min-height 900px
+  min-height 550px
+  height calc(100vh - 180px)
   margin-top 100px
   position relative
   width 100%
@@ -68,6 +68,12 @@ export default {
 @media all and (max-width: 1000px)
   .new-hero
     margin-top 70px
+@media all and (max-width: 800px)
+  .new-hero
+    .new-hero-image
+      &:before
+        width 100%
+        background: rgba(0, 21, 75, .77)
 @media all and (max-width: 600px)
   .new-hero
     min-height 480px

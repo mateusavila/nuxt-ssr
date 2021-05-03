@@ -11,10 +11,9 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+      this.scrollEvent()
+      setTimeout(() => this.$store.commit('page/updateLoaded', true), 200);
     })
-    this.$nextTick(() => this.scrollEvent())
   },
   methods: {
     scrollEvent () {

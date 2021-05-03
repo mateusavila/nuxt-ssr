@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="`/blog/${data.news.post_name}`" class="blog-main-slider-item">
+  <nuxt-link :to="`/blog/${data.news.post_name}`" class="blog-main-slider-item" @click.native="newPage(`/blog/${data.news.post_name}`)">
     <ImageBox :images="data.news.acf.images" :alternate="data.news.post_title" />
     <div class="blog-main-slider-item-info">
       <h4>{{data.news.post_title}}</h4>
@@ -19,6 +19,12 @@ export default {
   },
   computed: {
     fullname () { return `${this.data.news.author_data.first_name} ${this.data.news.author_data.last_name}` }
+  },
+  methods: {
+    newPage (slug) { 
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false) 
+    }
   }
 }
 </script>

@@ -4,10 +4,10 @@
       <div class="faq-categories-list">
         <ul>
           <li>
-            <nuxt-link to="/faq" exact>Faq</nuxt-link>
+            <nuxt-link to="/faq" exact @click.native="newPage('/faq')">Faq</nuxt-link>
           </li>
           <li v-for="(item, index) in list" :key="index">
-            <nuxt-link  :to="`/faq/${item.slug}`">{{item.name}}</nuxt-link>
+            <nuxt-link  :to="`/faq/${item.slug}`" @click.native="newPage(`/faq/${item.slug}`)">{{item.name}}</nuxt-link>
           </li>
         </ul>
       </div>
@@ -22,6 +22,12 @@ export default {
       type: Array,
       required: false,
       default: []
+    }
+  },
+  methods: {
+    newPage (slug) { 
+      if (window.location.pathname === slug) return false
+      this.$store.commit('page/updateLoaded', false) 
     }
   }
 }

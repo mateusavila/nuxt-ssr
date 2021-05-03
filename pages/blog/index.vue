@@ -1,14 +1,15 @@
 <template>
-  <client-only>
-    <div class="blog-page">
-      <NewHero :data="page.acf.hero" />
-      <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
-      <BlogMainSlider :list="mainNews" />
-      <BlogFilter 
+  <div class="blog-page">
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
+    <NewHero :data="page.acf.hero" />
+    <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
+    <div class="content-visibility">
+      <LazyBlogMainSlider :list="mainNews" />
+      <LazyBlogFilter 
         :categories="categories"
         @search="search"
       />
-      <BlogPageList :list="posts" />
+      <LazyBlogPageList :list="posts" />
       <Paginate
           v-if="postsPage > 1"
           v-model="paged"
@@ -23,7 +24,7 @@
           :click-handler="paginate"
         />
     </div>
-  </client-only>
+  </div>
 </template>
 <script>
 import mixins from '~/helpers/mixins'
@@ -31,7 +32,7 @@ import blog from '~/helpers/blog'
 export default {
   layout: 'page',
   mixins: [mixins, blog],
-  async asyncData ({ store, route, app, $config: { baseAPI, lang, defaultURL } }) {
+  async asyncData ({ store, route, app, $config: { baseAPI, lang } }) {
     const pageResource = await app.$axios.$get(baseAPI + '/api/blog', { mode: 'cors' })
     const page = await pageResource
     

@@ -55,6 +55,10 @@ export default {
   .home-numbers-item
     width 100%
     margin-bottom 30px
+  .home-numbers-item-title
+    font-size 18px
+    strong
+      font-size 32px
 @media all and (max-width: 600px)
   .home-numbers
     .container

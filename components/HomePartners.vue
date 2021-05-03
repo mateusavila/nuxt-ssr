@@ -1,7 +1,9 @@
 <template>
   <div class="home-partners">
     <div class="container">
-      <swiper
+      <div class="home-partners-list">
+        <ArrowPrev @go-prev="prev" :size="list.length" css-class="theme-2" />
+        <swiper
         ref="partners" 
         :options="swiperBlockImage">
           <swiper-slide v-for="(item, index) in list" :key="index">
@@ -13,7 +15,8 @@
               loading="lazy">
           </swiper-slide>
         </swiper>
-        <div class="swiper-pagination partners-pagination"></div>
+        <ArrowNext @go-next="next" :size="list.length" css-class="theme-2" />
+      </div>
     </div>
   </div>
 </template>
@@ -33,10 +36,6 @@ export default {
         spaceBetween: 0,
         centeredSlides: false,
         slidesPerView: 3,
-        pagination: {
-          el: '.partners-pagination',
-          clickable: true
-        },
         loop: true,
         autoplay: {
           delay: 5000,
@@ -61,6 +60,15 @@ export default {
         }
       }
     }
+  },
+  computed: {
+    swiper() {
+      return this.$refs.partners.$swiper
+    }
+  },
+  methods: {
+    next () { this.swiper.slideNext() },
+    prev () { this.swiper.slidePrev() }
   }
 }
 </script>
@@ -69,7 +77,7 @@ export default {
 .home-partners
   box()
   margin 50px 0 100px
-  height 150px
+  height 80px
   .container
     width calc(100% - 64px)
     margin 0 auto
@@ -83,10 +91,16 @@ export default {
     align-items center
     height 70px
     img
-      max-width 100%
+      width auto
       height auto
+      max-height 35px
       display block
-
+.home-partners-list
+  display flex
+  justify-content space-between
+  align-items center
+  .swiper-container
+    width calc(100% - 100px)
 @media all and (max-width: 1100px)
   .home-partners
     .container
