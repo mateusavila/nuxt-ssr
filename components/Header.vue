@@ -49,7 +49,6 @@ export default {
       this.hideMenu = (this.scroll > this.lastScroll) ? true : false
       this.lastScroll = this.scroll
     },
-    openMenuEvent () { this.openMenu = !this.openMenu },
     closeMenu () { this.statusMenu = false },
     openMenu () { this.statusMenu = !this.statusMenu }
   }
@@ -78,7 +77,7 @@ header
     height 70px
     transitions(.2s)
   &.hide-menu
-    transform translateY(-122px)
+    transform translateY(-144px)
 .header-container
   justify-content space-between
   width calc(100% - 64px)
@@ -99,4 +98,7 @@ header
 @media all and (max-width: 750px)
   .header-container
     width calc(100% - 20px)
+  header
+    &.hide-menu
+      transform none
 </style>

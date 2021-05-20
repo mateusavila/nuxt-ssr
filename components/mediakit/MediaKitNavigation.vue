@@ -44,7 +44,10 @@ export default {
 <style lang="stylus">
 @import '~assets/css/functions.styl'
 .media-kit-navigation
-  width 100%
+  width 200px
+  position sticky
+  top 100px
+  left 0
   .toggler
     position absolute
     top 0
@@ -105,9 +108,11 @@ export default {
         padding-left 20px
         & > li > a
           font-size 14px
-@media all and (max-width: 1000px)
+@media all and (max-width: 1100px)
   .media-kit-navigation
-    width 100%
+    width 200px
+    position static
+    margin-bottom 30px
 @media all and (max-width: 600px)
   .media-kit-navigation
     display none

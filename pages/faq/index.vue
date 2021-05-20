@@ -2,7 +2,6 @@
   <div class="faq-page">
     <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
     <NewHero :data="page.acf.hero" />
-    <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
     <div class="content-visibility">
       <LazyFaqFilter @search="search" />
       <LazyFaqCategories :list="categories" />
@@ -12,37 +11,40 @@
 </template>
 <script>
 import mixins from '~/helpers/mixins'
+import { fetchResource } from '~/helpers/factory'
 export default {
   layout: 'faq',
   mixins: [mixins],
   async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
-
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
-    const language = await translate()
+
     if (!store.state.translate.loaded) {
-
-      const homeResource = await app.$axios.$get(baseAPI + '/api/home')
-      const home = await homeResource
-
+      const home = await fetchResource(`${baseAPI}/api/home`)
       store.commit('options/updateOptions', home.data.options)
-      store.commit('translate/updateTranslate', language)
+      store.commit('translate/updateTranslate', await translate())
       store.commit('translate/updateLoaded', true)
     }
-    
-    const pageResource = await app.$axios.$get(baseAPI + '/wp/v2/pages/?slug=faq')
-    const page = await pageResource[0]
 
-    const faqResource = await app.$axios.$get(baseAPI + '/wp/v2/faq?per_page=100')
-    const faq = await faqResource
+    let page = await fetchResource(`${baseAPI}/wp/v2/pages/?slug=faq`)
+    page = page[0]
 
-    const categoriesResource = await app.$axios.$get(baseAPI + '/wp/v2/category_faq')
-    const categories = await categoriesResource
+    page.yoast_meta.map(el => {
+      if(el.property !== 'og:url') {
+        app.head.meta.push({
+          hid: el.name ? el.name : el.property,
+          name: el.name ? el.name : el.property,
+          content: el.content,
+        })
+      } 
+    })
 
+    const faq = await fetchResource(`${baseAPI}/wp/v2/faq?per_page=100`)
+    const categories = await fetchResource(`${baseAPI}/wp/v2/category_faq`)
     return { 
       faq,
       page,
       categories,
-      translate: language
+      translate: await translate()
     }
   },
   data () {
@@ -56,7 +58,7 @@ export default {
     async search (search) {
       await this.$store.dispatch('faq/searchFaq', {
         baseAPI: this.$config.baseAPI,
-        search: search
+        search
       })
     }
   }

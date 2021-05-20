@@ -60,6 +60,14 @@ export default {
     font-size 14px
     color: #606266
     margin-bottom 20px
+  .faq-item-content-text a
+      color #3371f2
+      font-weight bold
+      text-decoration none
+      border-bottom 1px dotted #3371f2
+      transitions(.2s)
+      &:hover
+        border-bottom 1px solid
 @media all and (max-width: 1000px)
   .faq-item-desktop
     display none

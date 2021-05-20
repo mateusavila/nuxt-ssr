@@ -4,7 +4,7 @@
     <div class="container">
       <div class="media-kit-content">
         <TitleH3 :text="data.title" css-class="white" />
-        <LinkBox :text="data.button" :link="data.url" />
+        <LinkBox :text="data.button" :url="data.link" />
       </div>
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
       required: false,
       default: {}
     }
-  },
+  }
 }
 </script>
 <style lang="stylus">

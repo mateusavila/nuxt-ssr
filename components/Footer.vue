@@ -246,4 +246,6 @@ export default {
       width auto
       &:first-child
         margin-left 0
+  .footer-extra-links
+    width 100%
 </style>

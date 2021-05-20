@@ -6,19 +6,15 @@
         <Nuxt />
       </main>
       <Footer />
+      <LGPD 
+        text="Aqui a sua experiência é muito mais transparente. Ao clicar em aceito, você permitirá que a gente utilize cookies para analisar como você interage em nosso site, oferecendo conteúdos personalizados." 
+        url-policy="https://wpbr.a55.tech/wp-content/uploads/2021/04/Politica_de_protecao_de_dados_a55.pdf" />
     </div>
   </client-only>
 </template>
 <script>
-  
 export default {
-  name: 'page',
-  data () {
-    return {
-      konami: false,
-      current: 0
-    }
-  }
+  name: 'page'
 }
 </script>
 <style lang="stylus">

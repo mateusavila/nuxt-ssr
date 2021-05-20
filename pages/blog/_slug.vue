@@ -6,9 +6,16 @@
         <div class="container">
           <Breadcrumbs :data="single.data" />
           <LazyPageContent :data="single.data" />
+          <Share :data="single.data" />
           <LazyAuthorBox 
           v-if="authorBlock === 1"
           :author="single.data.author" 
+          :date="single.data.date"
+          :updated-date="single.data.updated_date"
+          />
+          <LazyAuthorBox 
+          v-if="authorBlock === 2"
+          :author="single.data.acf.external_author" 
           :date="single.data.date"
           :updated-date="single.data.updated_date"
           />
@@ -27,64 +34,88 @@
 <script>
 import mixins from '~/helpers/mixins'
 import blog from '~/helpers/blog'
+import { fetchResource } from '~/helpers/factory'
 export default {
   layout: 'page',
   mixins: [mixins, blog],
   async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
-    const language = await translate()
 
     if (!store.state.translate.loaded) {
-
-      const homeResource = await app.$axios.$get(baseAPI + '/api/home', { mode: 'cors' })
-      const home = await homeResource
-
+      const home = await fetchResource(`${baseAPI}/api/home`)
       store.commit('options/updateOptions', home.data.options)
-      store.commit('translate/updateTranslate', language)
+      store.commit('translate/updateTranslate', await translate())
       store.commit('translate/updateLoaded', true)
     }
+    const page = await fetchResource(`${baseAPI}/api/blog`)
+    const single = await fetchResource(`${baseAPI}/api/blog-item?slug=${params.slug}`)
 
-    const pageResource = await app.$axios.$get(baseAPI + '/api/blog', { mode: 'cors' })
-    const page = await pageResource
-    
-    let total = 0
-    let pages = 0
-    let posts = []
-    await app.$axios.get(baseAPI + '/wp/v2/posts/?per_page=9&page=1').then(response => {
-      total = +response.headers['x-wp-total']
-      pages = +response.headers['x-wp-totalpages']
-      posts = response.data
+    // adicionando as tags de SEO da interna de notícias
+    const keys = Object.keys(single.data.yoast.yoast_meta)
+    keys.map(el => {
+      if(el !== 'og:images') {
+        app.head.meta.push({
+          hid: el,
+          property: el,
+          content: single.data.yoast.yoast_meta[el]
+        })
+      }
     })
 
-    const postResource = await fetch(`${baseAPI}/api/blog-item?slug=${params.slug}`)
-    const post = await postResource.json()
-    
-    return { 
-      translate: language,
-      single: post,
-      page: page.data.home,
-      posts: page.data.posts || [],
-      categories: page.data.home.acf.categories,
-      mainNews: page.data.home.acf.list,
-      postsTotal: total,
-      postsPage: pages
-    }
+    // condições especiais
+    app.head.meta.push({
+      hid: 'og:image',
+      property: 'og:image',
+      content: single.data.yoast.yoast_meta['twitter:image']
+    })
 
+    // sobrescrever a descrição do post pro google
+    const head = app.head.meta.map(el => {
+      if (el.hid === 'description') {
+        return {
+          hid: 'description',
+          name: 'description',
+          content: single.data.yoast.yoast_meta['og:description']
+        }
+      }
+      return { ...el }
+    })
+    app.head.meta = head
+    return { 
+      translate: await translate(),
+      single,
+      page: page.data.home
+    }
   },  
+  head () {
+    if(this.single) {
+      const meta = []
+      const metatags = ['twitter_site', 'canonical']
+      // og:url é property
+      meta.push({
+        hid: 'og:url',
+        property: 'og:url',
+        content: window.location.href
+      })
+      metatags.map(el => {
+        meta.push({
+          hid: el,
+          name: el,
+          content: window.location.href
+        })
+      })
+      return { meta }
+    }
+  },
   data () {
     return {
       single: {},
-      posts: [],
       translate: {},
-      mainNews: [],
-      postsTotal: 0,
-      postsPage: 0,
-      posts: [],
       page: {}
     }
   },
   computed: {
-    authorBlock () { return parseInt(this.single.data.acf.author_block, 10) }
+    authorBlock () { return +this.single.data.acf.author_block }
   }
 }
 </script>

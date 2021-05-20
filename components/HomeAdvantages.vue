@@ -26,7 +26,8 @@ export default {
 @import '~assets/css/functions.styl'
 .home-advantages
   box()
-  margin 180px 0
+  background #fff
+  padding 180px 0
   .container
     width calc(100% - 64px)
     margin 0 auto
@@ -50,7 +51,7 @@ export default {
     line-height 150%
 @media all and (max-width: 1200px)
   .home-advantages
-    margin 80px 0
+    padding 80px 0
     .container
       width calc(100% - 40px) 
   .home-advantages-item
@@ -64,7 +65,7 @@ export default {
     margin-bottom 40px
 @media all and (max-width: 600px)
   .home-advantages
-    margin 60px 0
+    padding 60px 0
     .container
       width calc(100% - 20px)
 </style>

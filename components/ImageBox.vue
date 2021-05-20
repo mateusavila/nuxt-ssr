@@ -59,7 +59,6 @@ export default {
     height auto
     max-width 100%
     background-size cover
-    background-color #fafafa
 @media all and (max-width: 1300px)
   .image-box
     &.hero-image

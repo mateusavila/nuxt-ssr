@@ -33,7 +33,7 @@ export default {
 </script>
 <style lang="stylus">
 @import '~assets/css/functions.styl'
-.steps 
+.steps
   padding 50px 0
   .container
     margin 0 auto

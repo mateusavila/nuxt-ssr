@@ -9,7 +9,7 @@
           :key="index">
             <img :src="item.image.url" :alt="item.image.text" :width="item.image.width" :height="item.image.height" loading="lazy">
             <p>{{item.text}}</p>
-          </div>
+        </div>
       </div>
     </div>
   </div>

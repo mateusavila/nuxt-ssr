@@ -19,7 +19,11 @@
         </div>
       </div>
       <div class="home-how-works-action">
-        <LinkBox :text="data.button" :url="data.link" color="orange" css-class="huge" />
+        <LinkBox 
+          :text="data.button" 
+          :url="data.link" 
+          color="orange" 
+          css-class="huge" />
       </div>  
     </div>
   </div>
@@ -33,7 +37,7 @@ export default {
       required: false,
       default: {}
     }
-  },
+  }
 }
 </script>
 <style lang="stylus">
@@ -102,4 +106,9 @@ export default {
   .home-how-works
     .container
       width calc(100% - 20px)
+  .home-how-works-item-icon 
+    height 65px
+    img
+      width auto
+      height 65px
 </style>

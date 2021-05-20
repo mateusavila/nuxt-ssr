@@ -1,7 +1,7 @@
 <template>
   <div class="blog-page-list-master">
     <div class="container">
-      <div class="blog-page-list" v-if="list.length > 0">
+      <div class="blog-page-list" v-if="list.length">
         <BlogItem :data="item" v-for="(item, index) in list" :key="index" />
       </div>
       <div class="blog-page-empty" v-if="list.length === 0">

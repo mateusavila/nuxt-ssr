@@ -1,5 +1,5 @@
 <template>
-  <nav class="main-navigation" :class="{'active': statusMenu}" data-test="1">
+  <nav class="main-navigation" :class="{'active': statusMenu, 'right': menu === 'partners'}" data-test="1">
     <ul>
       <li v-for="(link, index) in translate.header.menu" :key="index" v-if="menu === 'default'">
         <nuxt-link :to="link.slug" @click.native="newPage(link.slug)" exact>{{link.name}}</nuxt-link v-if="!link.external">
@@ -55,6 +55,10 @@ export default {
   align-content center
   display flex
   justify-content space-between
+  &.right
+    justify-content flex-end
+    ul
+      width 400px
   ul
     width 650px
     margin 0

@@ -11,10 +11,7 @@
 </template>
 <script>
 export default {
-  name: 'faq',
-  methods: {
-    closeMenu () { this.statusMenu = false }
-  }
+  name: 'faq'
 }
 </script>
 

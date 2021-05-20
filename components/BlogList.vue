@@ -56,9 +56,7 @@ export default {
     }
   }),
   computed: {
-    swiper() {
-      return this.$refs.blogSlider.$swiper
-    }
+    swiper() { return this.$refs.blogSlider.$swiper }
   },
   methods: {
     next () { this.swiper.slideNext() },

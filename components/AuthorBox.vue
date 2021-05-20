@@ -1,7 +1,7 @@
 <template>
   <div class="box-author">
     <div class="box-author-image">
-      <img :src="author.photo" :alt="author.name" width="112" height="112" loading="lazy" />
+      <img :src="author.photo" :alt="fullname" width="112" height="112" loading="lazy" />
     </div>
     <div class="box-author-info">
       <p><strong>{{fullname}} |</strong> {{author.job}}</p>
@@ -38,28 +38,28 @@ export default {
 <style lang="stylus">
 @import '~assets/css/functions.styl'
 .box-author
-  width 100%
-  padding 24px
+  align-items center
   background #00417F
   border-radius 16px
   display flex
-  align-items center
-  justify-content space-between
   flex-wrap wrap
+  justify-content space-between
+  padding 24px
+  width 100%
 .box-author-image
-  width 122px
-  height 122px
   border-radius 122px
+  height 122px
   margin-right 32px
+  width 122px
   img
     border-radius 100%
 .box-author-info
   color #fff
   width calc(100% - 155px)
   p
+    color #fff
     font-size 16px
     line-height 150%
-    color #fff
     margin 4px 0
 @media all and (max-width: 800px)
   .box-author
@@ -70,8 +70,8 @@ export default {
     justify-content center
   .box-author-info
     width 100%
-    text-align center
     margin-top 20px
+    text-align center
     p
       font-size 14px
 </style>

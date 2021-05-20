@@ -23,7 +23,7 @@
       this.setStyle()
     },
     methods: {
-      setStyle () { this.$el.style.setProperty('--margin', this.marginBottom+'px') }
+      setStyle () { this.$el.style.setProperty('--margin', `${this.marginBottom}px`) }
     }
   }
 </script>

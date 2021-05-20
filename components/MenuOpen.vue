@@ -22,9 +22,7 @@ export default {
     translate () { return this.$store.state.translate.translate }
   },
   methods: {
-    action () { 
-      this.$emit('action') 
-    }
+    action () { this.$emit('action') }
   }
 }
 </script>

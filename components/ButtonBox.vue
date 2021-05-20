@@ -39,10 +39,7 @@ export default{
     },
   },
   methods: {
-    action () { 
-      console.log('trigger')
-      this.$emit('action') 
-    }
+    action () { this.$emit('action') }
   }
 }
 </script>

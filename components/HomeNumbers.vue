@@ -46,7 +46,6 @@ export default {
     color #FF7A0D
     font-size 45px
     line-height 32px
-
 @media all and (max-width: 1100px)
   .home-numbers
     .container

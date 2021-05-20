@@ -5,7 +5,7 @@
       <div class="box-jobs-center">
         <div class="box-jobs-text" v-html="data.text"></div>
         <div class="box-jobs-action">
-          <LinkBox :text="data.button" :url="data.url" color="orange" />
+          <LinkBox :text="data.button" :url="data.link" color="orange" />
         </div>
       </div>
     </div>
@@ -44,6 +44,7 @@ export default {
     z-index 2
     img
       height 100%
+      width 100%
     &:before
       content ''
       position absolute

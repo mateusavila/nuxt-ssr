@@ -2,7 +2,6 @@
   <div class="blog-page">
     <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
     <NewHero :data="page.acf.hero" />
-    <GrowthBox :data="page.acf.growth" negative-margin="-60px"/>
     <div class="content-visibility">
       <LazyBlogMainSlider :list="mainNews" />
       <LazyBlogFilter 
@@ -29,39 +28,38 @@
 <script>
 import mixins from '~/helpers/mixins'
 import blog from '~/helpers/blog'
+import { fetchResource } from '~/helpers/factory'
 export default {
   layout: 'page',
   mixins: [mixins, blog],
   async asyncData ({ store, params, app, $config: { baseAPI, lang } }) {
-    const pageResource = await app.$axios.$get(baseAPI + '/api/blog', { mode: 'cors' })
-    const page = await pageResource
     
-    let total = 0
-    let pages = 0
-    let posts = []
-    await app.$axios.get(baseAPI + '/category/v1/?category='+params.category+'&page='+params.page).then(response => {
-      total = response.headers['x-wp-total']
-      pages = response.headers['x-wp-totalpages']
-      posts = response.data
-    })
-
     const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
-    const language = await translate()
 
+    const page = await fetchResource(`${baseAPI}/api/blog`)
+    page.data.home.yoast_meta.map(el => {
+      if(el.property !== 'og:url') {
+        app.head.meta.push({
+          hid: el.name ? el.name : el.property,
+          name: el.name ? el.name : el.property,
+          content: el.content,
+        })
+      } 
+    })
+    
+    const posts = await fetchResource(`${baseAPI}/category/v1/?category=${params.category}&page=${params.page}`)
+    
     if (!store.state.translate.loaded) {
-
-      const homeResource = await app.$axios.$get(baseAPI + '/api/home', { mode: 'cors' })
-      const home = await homeResource
-
+      const home = await fetchResource(`${baseAPI}/api/home`)
       store.commit('options/updateOptions', home.data.options)
-      store.commit('translate/updateTranslate', language)
+      store.commit('translate/updateTranslate', await translate())
       store.commit('translate/updateLoaded', true)
     }
 
     return {
       posts: posts.data,
       page: page.data.home,
-      translate: language,
+      translate: await translate(),
       categories: page.data.home.acf.categories,
       mainNews: page.data.home.acf.list,
       postsTotal: posts.found_posts,
@@ -70,7 +68,7 @@ export default {
   },  
   data () {
     return {
-      paged: parseInt(this.$route.params.page, 10),
+      paged: +this.$route.params.page,
       page: {},
       posts: [],
       categories: [],

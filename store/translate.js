@@ -21,6 +21,10 @@ export const state = () => ({
       lang: 'pt-BR',
       currency: 'BRL',
       title: '',
+      values: {
+        money: [],
+        revenue: []
+      },
       numbers: {
         money: {
           min: 0,
@@ -88,12 +92,7 @@ export const state = () => ({
       terms: {
         text: '',
         url: ''
-      },
-      menu: [],
-      email: '',
-      a55_menu: [],
-      platform_menu: [],
-      country_menu: []
+      }
     },
     header: {
       menu_text: '',

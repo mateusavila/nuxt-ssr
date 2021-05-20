@@ -18,7 +18,7 @@ export default {
       required: false,
       default: {}
     }
-  },
+  }
 }
 </script>
 <style lang="stylus">

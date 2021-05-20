@@ -5,7 +5,7 @@
       <div class="box-platform-center">
         <div class="box-platform-text" v-html="data.text"></div>
         <div class="box-platform-action">
-          <LinkBox :text="data.button" :url="data.url" color="orange" />
+          <LinkBox :text="data.button" :url="data.link" color="orange" />
         </div>
       </div>
     </div>
@@ -50,11 +50,12 @@ export default {
   box()
   &.text-big
     .box-platform-text
-      max-width 700px
+      max-width 600px
   .box-platform-image
     filler()
     z-index 2
     img
+      width 100%
       height 100%
     &:before
       content ''
@@ -88,7 +89,7 @@ export default {
     line-height 150%
 .box-platform-center
   width 100%
-  max-width 600px
+  max-width 500px
 
 .box-platform-action
   margin-top 50px

@@ -9,7 +9,7 @@
         <p class="growth-label" v-html="translate.parcel"></p>
         <p class="growth-data">{{data.parcel}}</p>
       </div>
-      <div class="growth-box-info-item">
+      <div class="growth-box-info-item big">
         <p class="growth-label" v-html="translate.ideal"></p>
         <p class="growth-data">{{data.ideal}}</p>
       </div>
@@ -75,25 +75,28 @@ export default {
     justify-content space-between
     flex-wrap wrap
   .growth-box-info-item
-    width calc(100% / 3)
+    width calc(100% / 3 - 20px)
     display flex
     align-items center
     flex-wrap wrap
     justify-content flex-start
+    &.big
+      width calc(100% / 3 + 40px)
   .growth-label
-    width 70px
+    width 100%
     font-size 14px
     line-height 18px
     color #00154B
     margin 0
     font-weight bold
+    br
+      display none
   .growth-data
     font-size 28px
+    width 100%
     line-height 110%
     font-weight bold
-    margin-left 10px
     color #FF7A0D
-    max-width calc(100% - 80px)
 @media all and (max-width: 1200px)
   .growth-box
     .growth-data
@@ -113,6 +116,9 @@ export default {
     .growth-box-info-item
       width 100%
       margin 5px 0
+    .growth-box-info-item.big
+      width 100%
+      margin 5px 0
     .growth-label
       width auto
       br
@@ -126,6 +132,9 @@ export default {
     .growth-box-action
       width 210px
       margin 20px auto 0
-    .growth-box-info-item
-      justify-content center
+    .growth-label
+      width 100%
+      text-align center
+    .growth-data
+      text-align center
 </style>

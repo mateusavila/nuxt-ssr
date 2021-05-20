@@ -1,8 +1,5 @@
 
 export default {
-  data: () => ({
-    animationPaused: false
-  }),
   created () {
     window.addEventListener('scroll', this.debounce(() => this.scrollEvent(), 200))
   },
@@ -25,11 +22,6 @@ export default {
             element.classList.add('active');
           } 
         })
-      }
-      if(document.querySelector('.numbers')) {
-        if(windowTop > document.querySelector('.numbers').offsetTop) {
-          this.animationPaused = true
-        }
       }
     },
     debounce(func, wait, immediate) {

@@ -39,7 +39,7 @@ export default {
   img
     margin-bottom 24px
   p
-    font-size 24px
+    font-size 20px
     line-height 150%
 .testimonial-item-image
   width 192px

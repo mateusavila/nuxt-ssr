@@ -2,84 +2,97 @@
   <div class="simulator">
     <div class="container">
       <div class="simulator-title">
-        <TitleH3 :text="translate.title" css-class="dark-blue center" />
+        <TitleH3 :text="translate.title" css-class="dark-blue center" :margin-bottom="0" />
       </div>
       <div class="simulator-form">
-        <TitleH5 :text="translate.form.title" css-class="dark-blue left" />
+        <TitleH5 :text="translate.form.title" css-class="dark-blue left" :margin-bottom="15" />
         <div class="simulator-field">
+          <div class="simulator-field-value simulator-field-value-0">{{translate.form.currency}} <strong>{{fake_money}}{{money_unity}}</strong></div>
           <p class="simulator-field-label">{{translate.form.like}}</p>
           <div class="bar bar-0">
-            <div class="bar-inner bar-inner-0" :class="{'konami': this.konami}"></div>
             <div class="bar-values">
               <span>{{translate.numbers.money.min_text}}</span>
               <span>{{translate.numbers.money.max_text}}</span>
             </div>
+            <div class="bar-inner bar-inner-0" :class="{'konami': this.konami}"></div>
             <input 
               :class="{'konami': this.konami}" 
               class="simulator-input-0" 
               type="range" 
               name="money" 
               v-model="form.money" 
-              :min="translate.numbers.money.min" 
-              :max="translate.numbers.money.max" 
-              :step="translate.numbers.money.step"
-              @mouseover="showBar(0)" 
-              @mouseout="hideBar(0)"
-              @input="updatePosition(0, 'money', translate.numbers.money.min, translate.numbers.money.max)">
+              :min="0" 
+              :max="translate.values.money.length - 1"
+              @mouseover="showBar(0, '')" 
+              @mouseout="hideBar(0, '')"
+              @input="updatePosition(0, 'money', 0, translate.values.money.length - 1)">
           </div>
-          <div class="simulator-field-value simulator-field-value-0">{{translate.form.currency}} <strong>{{fake_money}}{{money_unity}}</strong></div>
+          <div class="bar-controls">
+            <ButtonMinus @minus="remPosition(0, 'money', 0, translate.values.money.length - 1)" />
+            <span class="bar-active-value">{{translate.form.currency}} <strong>{{fake_money}}{{money_unity}}</strong></span>
+            <ButtonPlus @add="addPosition(0, 'money', 0, translate.values.money.length - 1)" />
+          </div>
         </div>
         <div class="simulator-field">
+          <div class="simulator-field-value simulator-field-value-1"><strong>{{fake_month}}</strong> {{translate.form.months}}</div>
           <p class="simulator-field-label">{{translate.form.pay}}</p>
           <div class="bar bar-1">
-            <div class="bar-inner bar-inner-1" :class="{'konami': this.konami}"></div>
             <div class="bar-values">
               <span>{{translate.numbers.parcel.min_text}}</span>
               <span>{{translate.numbers.parcel.max_text}}</span>
             </div>
+            <div class="bar-inner bar-inner-1" :class="{'konami': this.konami}"></div>
             <input 
               :class="{'konami': this.konami}" 
               class="simulator-input-1" 
               type="range" 
               name="parcel" 
               v-model="form.parcel" 
-              :min="translate.numbers.parcel.min" 
-              :max="translate.numbers.parcel.max" 
-              :step="translate.numbers.parcel.step"
-              @mouseover="showBar(1)"
-              @mouseout="hideBar(1)"
-              @input="updatePosition(1, 'parcel', translate.numbers.parcel.min, translate.numbers.parcel.max)">
+              :min="0" 
+              :max="translate.values.parcel.length - 1" 
+              @mouseover="showBar(1, '')"
+              @mouseout="hideBar(1, '')"
+              @input="updatePosition(1, 'parcel', 0, translate.values.parcel.length - 1, '')">
           </div>
-          <div class="simulator-field-value simulator-field-value-1"><strong>{{form.parcel}}</strong> {{translate.form.months}}</div>
+          <div class="bar-controls">
+            <ButtonMinus @minus="remPosition(1, 'parcel', 0, translate.values.parcel.length - 1, '')" />
+            <span class="bar-active-value"><strong>{{fake_month}}</strong> {{translate.form.months}}</span>
+            <ButtonPlus @add="addPosition(1, 'parcel', 0, translate.values.parcel.length - 1, '')" />
+          </div>
+          
         </div>
         <div class="simulator-field">
+          <div class="simulator-field-value simulator-field-value-2">{{translate.form.currency}} <strong>{{fake_revenue}}{{revenue_unity}}</strong></div>
           <p class="simulator-field-label">{{translate.form.revenue}}</p>
           <div class="bar bar-2">
-            <div class="bar-inner bar-inner-2" :class="{'konami': this.konami}"></div>
             <div class="bar-values">
               <span>{{translate.numbers.revenue.min_text}}</span>
               <span>{{translate.numbers.revenue.max_text}}</span>
             </div>
+            <div class="bar-inner bar-inner-2" :class="{'konami': this.konami}"></div>
             <input 
             :class="{'konami': this.konami}" 
             class="simulator-input-2" 
             type="range" 
             name="revenue" 
             v-model="form.revenue" 
-            :min="translate.numbers.revenue.min" 
-            :max="translate.numbers.revenue.max" 
-            :step="translate.numbers.revenue.step" 
-            @mouseover="showBar(2)"
-            @mouseout="hideBar(2)"
-            @input="updatePosition(2, 'revenue', translate.numbers.revenue.min, translate.numbers.revenue.max)">
+            :min="0" 
+            :max="translate.values.revenue.length - 1" 
+            @mouseover="showBar(2, '')"
+            @mouseout="hideBar(2, '')"
+            @input="updatePosition(2, 'revenue', 0, translate.values.revenue.length - 1)">
           </div>
-          <div class="simulator-field-value simulator-field-value-2">{{translate.form.currency}} <strong>{{fake_revenue}}{{revenue_unity}}</strong></div>
+          <div class="bar-controls">
+            <ButtonMinus @minus="remPosition(2, 'revenue', 0, translate.values.revenue.length - 1)" />
+            <span class="bar-active-value">{{translate.form.currency}} <strong>{{fake_revenue}}{{revenue_unity}}</strong></span>
+            <ButtonPlus @add="addPosition(2, 'revenue', 0, translate.values.revenue.length - 1)" />
+          </div>
         </div>
       </div>
       <div class="simulator-result">
         <div class="simulator-result-main">
           <TitleH5 :text="translate.result.title" css-class="dark-blue" />
-          <p class="simulator-result-subtitle">{{form.parcel}} {{translate.result.parcel}}</p>
+          <p class="simulator-result-subtitle">{{fake_month}} {{translate.result.parcel}}</p>
           <p class="simulator-result-value">{{money}}</p>
           <p class="simulator-result-subtext">{{translate.result.total}} {{total}}*</p>
           <LinkBox :text="translate.result.go_to" :url="translate.result.url" color="orange" css-class="big simulator-button" />
@@ -88,22 +101,16 @@
           <p>{{translate.result.simulation_1}} <strong>{{CET}}% a.m*</strong></p>
           <p v-html="translate.result.simulation_2"></p>
         </div>
-        <!-- <div class="simulator-working-calc">
-          <TitleH5 text="Mexican Formular" css-class="dark-blue" />
-          <p class="simulator-result-subtitle">{{form.parcel}} {{translate.result.parcel}}</p>
-          <p class="simulator-result-value">{{mx_money}}</p>
-          <p class="simulator-result-subtext">{{translate.result.total}} {{mx_total}}*</p>
-        </div> -->
       </div>
     </div>
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import KonamiCode from 'vue-konami-code'
-
+// os métodos comuns a todos os Simuladores estão no mixin abaixo.
+import simulatorMixin from '~/helpers/simulator'
 export default {
   name: 'Simulator',
+  mixins: [simulatorMixin],
   data () {
     return {
       timer: {
@@ -112,6 +119,11 @@ export default {
         input3: null
       },
       translate: {
+        values: {
+          money: [],
+          revenue: [],
+          parcel: []
+        },
         numbers: {
           money: {
             min: 0,
@@ -145,128 +157,36 @@ export default {
         total: 1,
         money: 1,
         CET: 1
-      },
-      resultMx: {
-        total: 1,
-        money: 1
       }
     }
   },
   computed: {
-    total () { 
-      return !this.translate.lang ? false : new Intl.NumberFormat(this.translate.lang, {
-          style: 'currency',
-          currency: this.translate.currency
-        }).format(this.result.total)
-    },
-    money () { 
-      return !this.translate.lang ? false : new Intl.NumberFormat(this.translate.lang, {
-          style: 'currency',
-          currency: this.translate.currency
-        }).format(this.result.money)
-    },
-    mx_total () { 
-      return !this.translate.lang ? false : new Intl.NumberFormat(this.translate.lang, {
-          style: 'currency',
-          currency: this.translate.currency
-        }).format(this.resultMx.total)
-    },
-    mx_money () { 
-      return !this.translate.lang ? false : new Intl.NumberFormat(this.translate.lang, {
-          style: 'currency',
-          currency: this.translate.currency
-        }).format(this.resultMx.money)
-    },
-    CET () { 
-      return this.result.CET.toFixed(2)
-    },
-    fake_money () { 
-      return this.form.money >= 1000 ? this.form.money / 1000 : this.form.money  
-    },
+    CET () { return this.result.CET.toFixed(2) },
     fake_revenue () { 
-      return this.form.revenue >= 1000 ? this.form.revenue / 1000 : this.form.revenue  
-    },
-    money_unity () {
-      return this.form.money >= 1000 ? 'Mi' : 'k'
+      return this.translate.values.revenue[this.form.revenue] >= 1000 ? this.translate.values.revenue[this.form.revenue] / 1000 : this.translate.values.revenue[this.form.revenue]
     },
     revenue_unity () {
-      return this.form.revenue >= 1000 ? 'Mi' : 'k'
+      return this.translate.values.revenue[this.form.revenue] >= 1000 ? 'Mi' : 'k'
     }
   },
   created () {
-    this.loadTranslation()
-  },
-  mounted () {
-    Vue.use(KonamiCode, {callback: () => {
-      this.$nextTick(() => this.konami = true )
-    }})
+    this.loadTranslation(['money', 'parcel', 'revenue'], 'pt-br', '')
   },
   methods: {
-    showBar (index) {
-      const baloon = document.querySelector('.simulator-field-value-'+index)
-      baloon.classList.add('active') 
-    },
-    hideBar (index) {
-      const baloon = document.querySelector('.simulator-field-value-'+index)
-      baloon.classList.remove('active') 
-    },
-    async loadTranslation () {
-      const translate = () => import(`~/helpers/simulator-${this.$config.lang}.js`).then(m => m.default || m)
-      this.translate = await translate()
-      this.form.money = this.translate.numbers.money.min
-      this.form.parcel = this.translate.numbers.parcel.min
-      this.form.revenue = this.translate.numbers.revenue.min
-      this.updatePosition(0, 'money', this.translate.numbers.money.min, this.translate.numbers.money.max)
-      this.updatePosition(1, 'parcel', this.translate.numbers.parcel.min, this.translate.numbers.parcel.max)
-      this.updatePosition(2, 'revenue', this.translate.numbers.revenue.min, this.translate.numbers.revenue.max)
-    },
-    updatePosition (index, key, min, max) {
-      const input = document.querySelector('.simulator-input-'+index)
-      const baloon = document.querySelector('.simulator-field-value-'+index)
-      if (this.timer['input'+index]) clearTimeout(this.timer['input'+index])
-      this.timer['input'+index] = setTimeout(() => {
-        baloon.classList.remove('active')
-      }, 300)
-      baloon.classList.add('active')
-      const bar = document.querySelector('.bar-inner-'+index) 
-      const ball = this.konami ? 40 : 16
-      const range = max - min
-      const position = ((this.form[key] - min) / range) * 100
-      const positionOffset = Math.round(ball * position / 100) - (ball / 2)
-      baloon.style.left = 'calc('+position+'% - '+ positionOffset +'px)'
-      bar.style.width = position+"%"
-      this.calculate()
-    },
     calculate () {
-      const parcel = +this.form.parcel
-      const money = +this.form.money * 1000
-      const revenue = +this.form.revenue * 1000
-
-      this.result.CET = ((money/revenue)/2) + (parcel * 0.1825)
-      const calcPercent = Math.pow((this.result.CET/100) + 1, parcel)
-      const installments = money * (calcPercent * (this.result.CET/100)) / (calcPercent - 1)
+      const parcel = +this.translate.values.parcel[this.form.parcel]
+      const money = +this.translate.values.money[this.form.money] * 1000
+      const revenue = +this.translate.values.revenue[this.form.revenue] * 1000
+      const CET = ((money/revenue)/2) + (parcel * 0.1825)
+      const percent = Math.pow((this.result.CET/100) + 1, parcel)
+      const installments = money * (percent * (this.result.CET/100)) / (percent - 1)
       const amount = installments * parcel
-
+      this.result.CET = CET
       this.result.money = installments
       this.result.total = amount
-
-      // formula mexicana
-      // this.calculateMX()
-    },
-    calculateMX () {
-      const parcel = +this.form.parcel
-      const money = +this.form.money * 1000
-      const revenue = +this.form.revenue * 1000
-
-      // =C3 * ((C5 * ((1 + C5) ^ C4) ) / (((1 + C5) ^ C4) - 1))
-      const amount = money * ((2.04 * ((1 + 2.04) ** parcel) ) / (((1 + 2.04) ** parcel) - 1))
-      this.resultMx.total = amount
-      this.resultMx.money = amount / parcel    
     }
   }
 }
-
-
 </script>
 <style lang="stylus">
 @import '~assets/css/functions.styl'
@@ -297,6 +217,7 @@ export default {
     text-align center
     justify-content center
     display flex
+    margin-bottom 40px
 .simulator-working-calc
   font-size 12px
   margin-top 30px
@@ -308,7 +229,8 @@ export default {
 .simulator-field
   width 100%
   position relative
-  margin-top 30px
+  margin-bottom 30px
+  display block
   &:last-child
     margin-bottom 0
   .bar
@@ -316,7 +238,6 @@ export default {
     height 6px
     position relative
     width 100%
-    margin-bottom 15px
     border-radius 6px
   .bar-values
     width 100%
@@ -324,7 +245,7 @@ export default {
     justify-content space-between
     font-size 12px
     position absolute
-    top 20px
+    top -25px
     span
       color #C0C4CC
       font-size 12px
@@ -408,15 +329,27 @@ export default {
     border none
     width 40px
     height 40px
+.bar-controls
+  display flex
+  max-width 150px
+  margin 15px auto 0
+  width calc(100% - 100px)
+  align-items center
+  justify-content space-between
+.bar-active-value
+  font-size 14px
+  color #ff7a0d
 .simulator-field-value
-  position relative
+  position absolute
   height 36px
   transform translateX(-50%)
   display inline-block
   padding 10px
   text-align center
-  margin-top 5px
+  top 0
+  z-index 100
   border-radius 4px
+  white-space nowrap
   color #fff
   background #303133
   border-radius 4px
@@ -429,25 +362,25 @@ export default {
   &:after
     content ''
     position absolute
-    clip-path polygon(50% 0%, 0% 100%, 100% 100%)
+    clip-path polygon(50% 100%, 0 0, 100% 0)
     height 8px
     width 16px
     background #303133
     left 50%
     transform translateX(-50%)
-    top -7px
+    bottom -7px
 .simulator-field-label
   font-size 14px
   color #409EFF
   line-height 150%
-  margin-bottom 20px
+  margin-bottom 35px
 .simulator-form, .simulator-result
-  width 460px
+  width calc(50% - 50px)
   border-radius 4px
   background #fff
   box-shadow: 0px 4px 16px rgba(64, 158, 255, 0.1)
 .simulator-form
-  padding 36px 24px
+  padding 36px 24px 48px
   text-align left
 .simulator-result
   padding 36px 40px

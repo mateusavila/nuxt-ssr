@@ -26,6 +26,8 @@ export default {
   color #00417F
   text-align center
   margin 0 0 30px
+  &.orange
+    color #ff7a0d
   &.left
     text-align left
   &.white

@@ -7,6 +7,7 @@ export default {
     menu: [
       { name: "Home", slug: "/" },
       { name: "Parceiros", slug: "/integracao-parceiros" },
+      { name: "Analytics", slug: "/analytics" },
       { name: "Media Kit", slug: "/media-kit" },
       { name: "API", slug: "https://docs.a55.tech/docs", external: true }
     ],

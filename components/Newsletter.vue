@@ -36,20 +36,6 @@
             </div>
             <div class="field">
               <input 
-                type="text"
-                id="newsletter-last_name"
-                :class="errorClass($v.form.last_name)"
-                v-model.trim="$v.form.last_name.$model"
-                :placeholder="translate.newsletter.form.last_name.placeholder" 
-             />
-             <ErrorBox 
-                :status="$v.form.last_name.$error" 
-                :text="translate.newsletter.form.last_name.error" 
-                :margin-bottom="16"
-             />
-            </div>
-            <div class="field">
-              <input 
                 type="email"
                 id="newsletter-email"
                 :class="errorClass($v.form.email)"
@@ -79,8 +65,7 @@ export default {
     timer: null,
     form: {
       email: '',
-      first_name: '',
-      last_name: ''
+      first_name: ''
     },
     result: {
       status: false
@@ -101,30 +86,24 @@ export default {
       this.$v.$touch()
       if ( this.$v.$invalid ) { 
         if (this.timer) clearTimeout(this.timer)
-          this.timer = setTimeout(() => {
-            this.$v.$reset()
-          }, 4000)
+        this.timer = setTimeout(() => this.$v.$reset(), 4000)
       }
       if ( !this.$v.$invalid ) {
         this.loading = true
+        const list = [this.$config.newsletterList]
         const payload = {
           first_name: this.form.first_name,
-          // last_name: this.form.last_name,
           email: this.form.email,
           locale: "pt-br",
-          // list: ["all"]
-          list: [698]
+          list: list
         }
-        await fetch(`https://hubspot-manager-api-staging.a55.tech/v1/subscribe`, {
+        await fetch(this.$config.newsletterURL, {
           method: 'POST',
           mode: 'cors',
           body: JSON.stringify(payload)
         })
         .then(response => response.json())
-        .then(response => {
-          this.showResult(response)
-          this.loading = false
-        })
+        .then(response => this.showResult(response))
         .catch(error => this.showResult(error))
       }
     },
@@ -135,7 +114,6 @@ export default {
       this.result.type = resource.type
       this.form.email = ''
       this.form.first_name = ''
-      this.form.last_name = ''
       this.$v.$reset()
     },
     closeResult () {
@@ -146,9 +124,6 @@ export default {
   validations: {
     form: {
       first_name: {
-        required
-      },
-      last_name: {
         required
       },
       email: {
@@ -185,7 +160,7 @@ export default {
 .field-submit
   width 272px
 .field
-  width calc((100% - 300px) / 3)
+  width calc((100% - 300px) / 2)
   clear both
   margin-bottom 25px
   button
@@ -309,7 +284,7 @@ export default {
     margin 0
     width 200px
   .field
-    width calc((100% - 240px) / 3)
+    width calc((100% - 240px) / 2)
 @media all and (max-width: 1000px)
   .field
     width 100%

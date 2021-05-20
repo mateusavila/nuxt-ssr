@@ -9,7 +9,7 @@
         <p>{{translate.blog.filter.category_all}}</p>
       </div>
     </nuxt-link>
-    <nuxt-link :to="'/category/'+item.category.slug" v-for="(item, index) in list" :key="index" class="news-categories-item" @click.native="newPage('/category/'+item.category.slug)">
+    <nuxt-link :to="`/category/${item.category.slug}`" v-for="(item, index) in list" :key="index" class="news-categories-item" @click.native="newPage('/category/'+item.category.slug)">
       <div class="news-categories-image">
         <img :src="item.images.image.url" :alt="item.category.name" width="32" height="32" loading="lazy" class="news-categories-image-img">
         <img :src="item.images.image_hover.url" :alt="item.category.name +'hover'" width="32" height="32" loading="lazy" class="news-categories-image-img-hover">

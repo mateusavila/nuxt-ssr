@@ -31,6 +31,8 @@ export default {
     filler()
     z-index 2
     img
+      object-position center top
+      width 100%
       height 100%
     &:before
       content ''
@@ -55,7 +57,7 @@ export default {
   max-width 500px
   h2
     color #fff
-    font-size 60px
+    font-size 50px
     font-weight 900
 @media all and (max-width: 1200px)
   .new-hero

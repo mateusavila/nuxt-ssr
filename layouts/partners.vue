@@ -19,9 +19,6 @@ export default {
   name: 'partners',
   computed: {
     translate () { return this.$store.state.translate.translate }
-  },
-  methods: {
-    closeMenu () { this.statusMenu = false }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="media-kit-page">
-    <Loading :loading="loading" />
+    <LoadingBlock :loading="$store.state.page.loaded"></LoadingBlock>
     <div class="container">
       <div class="media-kit-navigation">
         <MediaKitNavigation />
@@ -20,6 +20,7 @@
 </template>
 <script>
 import mixins from '~/helpers/mixins'
+// eu botei estes componentes numa pasta, por isto que eles são chamados aqui.
 const MediaKitHero = () => import('~/components/mediakit/MediaKitHero.vue')
 const MediaKitNavigation = () => import('~/components/mediakit/MediaKitNavigation.vue')
 const MediaKitIntro = () => import('~/components/mediakit/MediaKitIntro.vue')
@@ -34,15 +35,49 @@ export default {
     MediaKitDownload, MediaKitTypography, MediaKitClients, MediaKitIntro, MediaKitNavigation, MediaKitHero, MediaKitColors, MediaKitOurLogo
   },
   mixins: [mixins],
-  async asyncData ({ store, $config: { baseAPI, lang, defaultURL } }) {
-    await store.dispatch('page/loadPage', { baseAPI, lang, defaultURL })
-    await store.dispatch('mediakit/loadPage', { baseAPI, lang, defaultURL, slug: 'integracao-media-kit' })
+  async asyncData ({ store, app, $config: { baseAPI, lang, defaultURL } }) {
+    // await store.dispatch('page/loadPage', { baseAPI, lang, defaultURL })
+    // await store.dispatch('mediakit/loadPage', { baseAPI, lang, defaultURL, slug: 'integracao-media-kit' })
+    require('isomorphic-fetch')
+    const translate = () => import(`~/helpers/${lang}.js`).then(m => m.default || m)
+    const language = await translate()
+    if (!store.state.translate.loaded) {
+      let home
+      await fetch(baseAPI + '/api/home', { mode: 'cors' })
+      .then(response => response.json())
+      .then(response => {
+        home = response
+      })
+
+      store.commit('options/updateOptions', home.data.options)
+      store.commit('translate/updateTranslate', language)
+      store.commit('translate/updateLoaded', true)
+    }
+    let mediakit
+    await fetch(baseAPI + '/wp/v2/pages/?slug=integracao-media-kit', { mode: 'cors' })
+    .then(response => response.json())
+    .then(response => {
+      mediakit = response[0]
+    })
+    mediakit.yoast_meta.map(el => {
+      if(el.property !== 'og:url') {
+        app.head.meta.push({
+          hid: el.name ? el.name : el.property,
+          name: el.name ? el.name : el.property,
+          content: el.content,
+        })
+      } 
+    })
+    return { 
+      mediakit,
+      translate: language
+    }
   },
-  computed: {
-    loading () { return this.$store.state.mediakit.loaded },
-    options () { return this.$store.state.options.options },
-    mediakit () { return this.$store.state.mediakit.mediakit },
-    translate () { return this.$store.state.translate.translate }
+  data () {
+    return {
+      mediakit: {},
+      translate: {}
+    }
   }
 }
 </script>
@@ -57,6 +92,7 @@ export default {
     margin 0 auto
     display flex
     align-items flex-start
+    flex-wrap wrap
     justify-content space-between
 .media-kit-navigation
   width 188px
@@ -66,6 +102,9 @@ export default {
   .media-kit-page
     .container
       width calc(100% - 40px)
+@media all and (max-width: 1100px)
+  .media-kit-content
+    width 100%
 @media all and (max-width: 600px)
   .media-kit-page
     .container

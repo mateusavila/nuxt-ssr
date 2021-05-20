@@ -32,12 +32,11 @@ export default {
 @import '~assets/css/functions.styl'
 .faq-filter
   width 100%
-  height 409px
+  height 250px
   background #00154B
-  margin-top -150px
-  padding-top 75px
   h1
     color #fff
+    margin 0
   .container
     max-width 1140px
     width calc(100% - 64px)

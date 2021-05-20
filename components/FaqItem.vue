@@ -81,6 +81,15 @@ export default {
     .faq-item-content-text
       transform translateY(0)
       transitions(.15s)
+      a
+        color #3371f2
+        font-weight bold
+        text-decoration none
+        border-bottom 1px dotted #3371f2
+        transitions(.2s)
+        &:hover
+          border-bottom 1px solid #3371f2
+          transitions(.2s)
 .faq-item-header
   display flex
   justify-content flex-start
